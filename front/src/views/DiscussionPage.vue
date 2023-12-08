@@ -1,6 +1,6 @@
 <template>
 	<section class="discussion">
-		Discussion Page
+		<h1>Обсуждение</h1>
 	</section>
 </template>
 
@@ -12,4 +12,6 @@ export default {
 
 <style lang="sass" scoped>
 .discussion
+	width: 100%
+	padding: 20px 24px 24px 24px
 </style>

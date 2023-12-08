@@ -3,10 +3,20 @@
 		<nav class="nav-bar__inner">
 			<ul>
 				<li>
-					<ButtonUI trans link="discussion" icon="chat">Обсуждения</ButtonUI>
+					<ButtonUI 
+						:active="getRouteName === '/discussion'" 
+						trans 
+						link="discussion" 
+						icon="chat"
+					>Обсуждения</ButtonUI>
 				</li>
 				<li>
-					<ButtonUI trans link="suppliers" icon="user">Поставщики</ButtonUI>
+					<ButtonUI 
+						:active="getRouteName === '/suppliers'" 
+						trans 
+						link="suppliers" 
+						icon="user"
+					>Поставщики</ButtonUI>
 				</li>
 				<li>
 					<ButtonUI trans icon="trending-up">Аналитика</ButtonUI>
@@ -24,9 +34,21 @@
 export default {
 	name: 'NavBar',
 
+	data() {
+		return {
+			actualPath: '/' 
+		}
+	},
+
 	computed: {
 		getRouteName() {
-			console.log();
+			return this.actualPath
+		}
+	},
+
+	watch: {
+		$route(to, from) {
+			this.actualPath = to.path
 		}
 	}
 }

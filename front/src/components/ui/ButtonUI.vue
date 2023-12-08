@@ -5,7 +5,8 @@
 		:class="['btn', {
 			'btn--blue-trans': blueTrans,
 			'btn--blue-fill': blueFill,
-			'btn--trans': trans
+			'btn--trans': trans,
+			'is-active': active
 		}]"
 	>
 		<IconUI v-if="icon.length > 0" :svg="icon" class="btn__icon"/>
@@ -17,7 +18,8 @@
 		:class="['btn', {
 			'btn--blue-trans': blueTrans,
 			'btn--blue-fill': blueFill,
-			'btn--trans': trans
+			'btn--trans': trans,
+			'is-active': active
 		}]"
 	>
 		<IconUI v-if="icon.length > 0" :svg="icon" class="btn__icon"/>
@@ -41,6 +43,10 @@ export default {
 			default: false
 		},
 		trans: {
+			type: Boolean,
+			default: false
+		},
+		active: {
 			type: Boolean,
 			default: false
 		},
@@ -115,6 +121,14 @@ export default {
 		.btn__icon
 			& path
 				fill: #A1A6B4
+
+		&.is-active
+			background: $blue
+			color: white
+
+			.btn__icon
+				& path
+					fill: white
 
 	&__icon
 		// width: 24px

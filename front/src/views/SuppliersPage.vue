@@ -1,6 +1,6 @@
 <template>
 	<section class="suppliers">
-		Suppliers Page
+		<h1>Поставщики</h1>
 	</section>
 </template>
 
@@ -12,4 +12,6 @@ export default {
 
 <style lang="sass" scoped>
 .suppliers
+	width: 100%
+	padding: 20px 24px 24px 24px
 </style>
