@@ -6,7 +6,7 @@
 		<p>Текс 400</p>
 		<ButtonUI>Кнопка</ButtonUI>
 		<ButtonUI link="/about">Ссылка</ButtonUI>
-		<InlineSvg name="mail"/>
+		<InlineSvg svg="mail"/>
 	</section>
 </template>
 
