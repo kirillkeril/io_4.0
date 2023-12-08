@@ -5,7 +5,7 @@
 	</div>
 </template>
 
-<script>
+<script lang="ts">
 import { useItemStore } from '../stores/test'
 import { storeToRefs } from 'pinia'
 
