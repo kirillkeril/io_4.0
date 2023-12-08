@@ -6,6 +6,7 @@
 		<p>Текс 400</p>
 		<ButtonUI>Кнопка</ButtonUI>
 		<ButtonUI link="/about">Ссылка</ButtonUI>
+		<IconUI icon="mail"/>
 	</section>
 </template>
 
@@ -16,12 +17,14 @@ export default {
 </script>
 
 <style scoped lang="sass">
+@import '../assets/sass/colors'
 .ui
 	display: flex
 	flex-direction: column
 	align-items: center
 
 	& p
+		color: $blue
 		&:nth-child(1)
 			font-weight: 700
 			font-size: 60px
