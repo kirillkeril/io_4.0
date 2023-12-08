@@ -1,9 +1,11 @@
 <template>
 	<section class="ui">
-		<p>Заголвок 700</p>
-		<p>Заголвок 600</p>
-		<p>Заголвок 500</p>
-		<p>Заголвок 400</p>
+		<p>Текс 700</p>
+		<p>Текс 600</p>
+		<p>Текс 500</p>
+		<p>Текс 400</p>
+		<ButtonUI>Кнопка</ButtonUI>
+		<ButtonUI link="/about">Ссылка</ButtonUI>
 	</section>
 </template>
 
@@ -15,6 +17,10 @@ export default {
 
 <style scoped lang="sass">
 .ui
+	display: flex
+	flex-direction: column
+	align-items: center
+
 	& p
 		&:nth-child(1)
 			font-weight: 700

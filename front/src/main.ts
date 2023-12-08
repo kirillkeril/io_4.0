@@ -7,6 +7,8 @@ import './assets/Inter/Inter.sass'
 import './assets/sass/reset.sass'
 import App from './App.vue'
 
+import components from './components/ui/index'
+
 import HomePage from './views/HomePage.vue'
 import AboutPage from './views/AboutPage.vue'
 import UiPage from './views/UiPage.vue'
@@ -21,6 +23,10 @@ const router = createRouter({
 		{ path: '/about', component: AboutPage },
 		{ path: '/ui', component: UiPage },
 	]
+})
+
+components.forEach(component => {
+    app.component(component.name, component)
 })
 
 app.use(router)
