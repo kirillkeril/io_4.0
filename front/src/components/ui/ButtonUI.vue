@@ -1,5 +1,14 @@
 <template>
-	<router-link v-if="link.length > 0" :to="link">
+	<router-link 
+		v-if="link.length > 0" 
+		:to="link"
+		:class="['btn', {
+			'btn--blue-trans': blueTrans,
+			'btn--blue-fill': blueFill,
+			'btn--trans': trans
+		}]"
+	>
+		<IconUI v-if="icon.length > 0" :svg="icon" class="btn__icon"/>
 		<slot></slot>
 	</router-link>
 
@@ -7,7 +16,8 @@
 		v-else 
 		:class="['btn', {
 			'btn--blue-trans': blueTrans,
-			'btn--blue-fill': blueFill
+			'btn--blue-fill': blueFill,
+			'btn--trans': trans
 		}]"
 	>
 		<IconUI v-if="icon.length > 0" :svg="icon" class="btn__icon"/>
@@ -27,6 +37,10 @@ export default {
 			default: false
 		},
 		blueFill: {
+			type: Boolean,
+			default: false
+		},
+		trans: {
 			type: Boolean,
 			default: false
 		},
@@ -51,6 +65,7 @@ export default {
 
 	font-size: 16px
 	font-weight: 600
+	line-height: 1.5
 	cursor: pointer
 	transition: .3s all
 
@@ -88,9 +103,22 @@ export default {
 			& path
 				fill: $white
 
+	&--trans
+		color: #A1A6B4
+
+		&:hover
+			background: $silver
+
+		&:active
+			transform: scale(.95)
+
+		.btn__icon
+			& path
+				fill: #A1A6B4
+
 	&__icon
-		width: 24px
-		height: 24px
+		// width: 24px
+		// height: 24px
 
 		& path
 			transition: .3s all

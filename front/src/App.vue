@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import HeaderBlock from "./components/HeaderBlock.vue";
 import FooterBlock from "./components/FooterBlock.vue";
+import NavBar from "./components/NavBar.vue";
 
 import { useItemStore } from "./stores/messages";
 import { useConnectionStore } from "./stores/connection";
@@ -20,6 +21,7 @@ connectionStore.bindEvents();
   <div class="app">
 	<HeaderBlock />
 	<main>
+		<NavBar />
 		<router-view></router-view>
 	</main>
 	<FooterBlock />
@@ -27,9 +29,14 @@ connectionStore.bindEvents();
 </template>
 
 <style scoped lang="sass">
+@import './assets/sass/colors'
 .app
 	min-height: 100vh
 	display: grid
 	grid-template-rows: auto 1fr auto
+	background: $white
+
+	& main
+		display: flex
 
 </style>

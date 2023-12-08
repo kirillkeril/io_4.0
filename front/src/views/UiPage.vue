@@ -7,6 +7,13 @@
 		<ButtonUI blueTrans icon="chat">Обсуждения</ButtonUI>
 		<br>
 		<ButtonUI blueFill icon="chat">Обсуждения</ButtonUI>
+		<br>
+		<ButtonUI blueTrans>Обсуждения</ButtonUI>
+		<br>
+		<ButtonUI blueFill>Обсуждения</ButtonUI>
+		<br>
+		<ButtonUI trans icon="chat">Поставщики</ButtonUI>
+		<br>
 		<ButtonUI link="/about">Ссылка</ButtonUI>
 		<InlineSvg svg="mail"/>
 	</section>
@@ -19,6 +26,8 @@ import InlineSvg from '../components/InlineSvg.vue';
 <style scoped lang="sass">
 @import '../assets/sass/colors'
 .ui
+	width: 100%
+	padding: 20px 24px 24px 24px
 	display: flex
 	flex-direction: column
 	align-items: center
