@@ -3,7 +3,7 @@ import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, { cors: true });
 
   // Add swagger
   const config = new DocumentBuilder().setTitle('Template').build();
@@ -11,11 +11,13 @@ async function bootstrap() {
   SwaggerModule.setup('/api/docs', app, documentation);
 
   app.enableCors({
-    origin: 'http://bulbaman.me',
+    origin: '*',
     methods: ['GET', 'POST'],
     allowedHeaders: '*',
     credentials: true,
   });
-  await app.listen(3000);
+
+  // app.useWebSocketAdapter(new SocketAdapter(app));
+  await app.listen(3001);
 }
 bootstrap();

@@ -11,7 +11,11 @@ export const state = reactive({
 // const URL = process.env.NODE_ENV === "production" ? undefined : "http://bulbaman.me:16001";
 
 export const socket = io('http://bulbaman.me:16001', {
-	withCredentials: true,
+	// withCredentials: true,
+	secure: false,
+	extraHeaders: {
+		"Access-Control-Allow-Origin": "http://bulbaman.me:16001"
+	}
 });
 
 socket.on("connect", () => {
