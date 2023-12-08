@@ -7,7 +7,7 @@ import { ConfigModule } from '@nestjs/config';
     ConfigModule.forRoot({
       envFilePath: '.env',
     }),
-    MongooseModule.forRoot('mongodb://bulbaman.me:16001'),
+    MongooseModule.forRoot('mongodb://bulbaman.me:16017'),
     MessagesModule,
   ],
 })
