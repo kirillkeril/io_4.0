@@ -9,7 +9,7 @@ import { MessagesService } from './messages.service';
 import { CreateMessageDto } from './dto/create-message.dto';
 import { Socket } from 'node:net';
 
-@WebSocketGateway()
+@WebSocketGateway({ cors: true })
 export class MessagesGateway {
   constructor(private readonly messagesService: MessagesService) {}
   clients: Set<Socket> = new Set();
