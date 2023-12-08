@@ -1,5 +1,5 @@
 <template>
-	<InlineSvg svg="mail"/>
+	<InlineSvg svg="mail" class="fsafgasfsa"/>
 </template>
 
 <script>
@@ -21,6 +21,6 @@ export default {
 }
 </script>
 
-<style lang="sass" scoped>
+<style lang="sass">
 
 </style>
