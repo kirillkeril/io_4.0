@@ -1,5 +1,5 @@
 <template>
-	<InlineSvg svg="mail" class="fsafgasfsa"/>
+	<InlineSvg svg="mail"/>
 </template>
 
 <script lang="ts">
