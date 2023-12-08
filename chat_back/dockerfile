@@ -8,6 +8,7 @@ COPY package*.json ./
 
 # Install app dependencies
 RUN npm install
+RUN npm install @nestjs/websockets @nestjs/platform-socket.io
 
 # Bundle app source
 COPY . .
