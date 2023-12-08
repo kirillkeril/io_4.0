@@ -10,15 +10,8 @@
 	</section>
 </template>
 
-<<<<<<< HEAD
-<script lang="ts">
-export default {
-
-}
-=======
 <script setup lang="ts">
 import InlineSvg from '../components/InlineSvg.vue';
->>>>>>> 2f786b159b5c79560e5c248cc5fb9694800ab82b
 </script>
 
 <style scoped lang="sass">
