@@ -1,11 +1,24 @@
-<script setup lang="ts">
-interface Props {
-	svg: string;
-}
+<script>
+import { defineAsyncComponent } from 'vue';
 
-const {svg} = defineProps<Props>();
+export default {
+	props: {
+		svg: {
+			type: String,
+			required: true,
+		},
+	},
+
+	computed: {
+		dynamicComponent() {
+			const name = this.svg;
+
+			return defineAsyncComponent(() => import(`../assets/svg/${name}.svg`));
+		},
+	},
+};
 </script>
 
 <template>
-	<img :src="`/svg/${svg}.svg`">
+	<component :is="dynamicComponent" />
 </template>
