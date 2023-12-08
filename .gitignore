@@ -39,11 +39,10 @@ chat_back/lerna-debug.log*
 
 # OS
 chat_back/.DS_Store
-chat_back/
 # Tests
 chat_back/coverage
 chat_back/.nyc_output
-chat_back/
+
 # IDEs and editors
 chat_back/.idea
 chat_back/.project
