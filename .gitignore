@@ -1,0 +1,61 @@
+# Logs
+front/logs
+front/*.log
+front/npm-debug.log*
+front/yarn-debug.log*
+front/yarn-error.log*
+front/pnpm-debug.log*
+front/lerna-debug.log*
+
+front/node_modules
+front/dist
+front/dist-ssr
+front/*.local
+
+# Editor directories and files
+front/.vscode/*
+front/!.vscode/extensions.json
+front/.idea
+front/.DS_Store
+front/*.suo
+front/*.ntvs*
+front/*.njsproj
+front/*.sln
+front/*.sw?
+
+
+# compiled output
+chat_back/dist
+chat_back/node_modules
+
+# Logs
+chat_back/logs
+chat_back/*.log
+chat_back/npm-debug.log*
+chat_back/pnpm-debug.log*
+chat_back/yarn-debug.log*
+chat_back/yarn-error.log*
+chat_back/lerna-debug.log*
+
+# OS
+chat_back/.DS_Store
+chat_back/
+# Tests
+chat_back/coverage
+chat_back/.nyc_output
+chat_back/
+# IDEs and editors
+chat_back/.idea
+chat_back/.project
+chat_back/.classpath
+chat_back/.c9/
+chat_back/*.launch
+chat_back/.settings/
+chat_back/*.sublime-workspace
+
+# IDE - VSCode
+chat_back/.vscode/*
+chat_back/!.vscode/settings.json
+chat_back/!.vscode/tasks.json
+chat_back/!.vscode/launch.json
+chat_back/!.vscode/extensions.json
