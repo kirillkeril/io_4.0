@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed, defineAsyncComponent } from 'vue';
+import { computed, defineAsyncComponent, defineProps } from 'vue';
 interface Props {
 	svg: string;
 }

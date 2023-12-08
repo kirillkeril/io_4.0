@@ -26,7 +26,7 @@ const router = createRouter({
 })
 
 components.forEach(component => {
-    app.component(component.name, component)
+    app.component(component.name ?? "", component)
 })
 
 app.use(router)

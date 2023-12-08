@@ -11,7 +11,6 @@
   "dependencies": {
     "pinia": "^2.1.7",
     "socket.io-client": "^4.7.2",
-    "vite-plugin-require": "^1.1.13",
     "vue": "^3.3.8",
     "vue-router": "^4.2.5"
   },
