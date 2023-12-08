@@ -6,14 +6,12 @@
 		<p>Текс 400</p>
 		<ButtonUI>Кнопка</ButtonUI>
 		<ButtonUI link="/about">Ссылка</ButtonUI>
-		<IconUI icon="mail"/>
+		<InlineSvg name="mail"/>
 	</section>
 </template>
 
-<script>
-export default {
-
-}
+<script setup lang="ts">
+import InlineSvg from '../components/InlineSvg.vue';
 </script>
 
 <style scoped lang="sass">

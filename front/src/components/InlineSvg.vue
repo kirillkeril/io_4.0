@@ -1,11 +1,9 @@
-<script setup lang="ts">
-interface Props {
-	svg: string;
-}
-
-const {svg} = defineProps<Props>();
-</script>
 
 <template>
-	<img :src="`/svg/${svg}.svg`">
+	<component :is="component"></component>
 </template>
+
+<script lang="ts" setup>
+import { computed } from 'vue';
+const component = computed(() => import('../assets/svg/mail.svg'));
+</script>
