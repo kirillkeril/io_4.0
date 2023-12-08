@@ -1,13 +1,24 @@
 <template>
-	<h1>MainPage</h1>
+	<div>
+		<h1 @click="incItem">MainPage</h1>
+		{{ item }}
+	</div>
 </template>
 
 <script>
+import { useItemStore } from '../stores/test'
+import { storeToRefs } from 'pinia'
+
 export default {
-	name: 'MainPage'
+	name: 'MainPage',
+
+	setup() {
+		const itemStore = useItemStore();
+		const { item } = storeToRefs(itemStore);
+		const { incItem } = itemStore;
+		return { item, incItem }
+	}
 }
 </script>
 
-<style>
-
-</style>
+<style></style>
