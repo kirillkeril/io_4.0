@@ -11,7 +11,10 @@ async function bootstrap() {
   SwaggerModule.setup('/api/docs', app, documentation);
 
   app.enableCors({
-    origin: true,
+    origin: 'http://bulbaman.me',
+    methods: ['GET', 'POST'],
+    allowedHeaders: '*',
+    credentials: true,
   });
   await app.listen(3000);
 }
