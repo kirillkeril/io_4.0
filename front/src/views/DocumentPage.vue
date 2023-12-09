@@ -5,7 +5,7 @@
 				<InlineSvg svg="arrow-left"/>
 				<h1>Документация</h1>
 			</router-link>
-			<ButtonUI green icon="check">Отправить на рассмотрение</ButtonUI>
+			<ButtonUI green link="/suppliers/discussion/document/specification" icon="check">Отправить на рассмотрение</ButtonUI>
 		</div>
 		<div class="document__body">
 			<DocumentBody />
