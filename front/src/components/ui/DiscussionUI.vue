@@ -55,7 +55,7 @@ const startDiscussion = async () => {
 		
 	}
 	const newDisck: Discussoin = { customerId: user!._id, providerId: provider._id, startDate: Date.now().toLocaleString() };
-	const res = await axios.post<Discussoin>('http://localhost:3001/api/discussion', newDisck);
+	const res = await axios.post<Discussoin>('https://mg.vp-pspu.cf/api/discussion', newDisck);
 	setDiscussion(res.data);
 	router.push('/suppliers/discussion');
 }

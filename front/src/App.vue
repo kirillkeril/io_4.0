@@ -3,12 +3,15 @@ import HeaderBlock from "./components/HeaderBlock.vue";
 import FooterBlock from "./components/FooterBlock.vue";
 import NavBar from "./components/NavBar.vue";
 import { useUserStore } from './stores/users';
+import { useDiscussionStore } from './stores/discussion';
 import { socket } from "./socket";
 
 const { getUser } = useUserStore();
+const { fetchAllDiscussions } = useDiscussionStore();
 // remove any existing listeners (after a hot module replacement)
 socket.off();
 getUser('6574396936f05d19e2d31f6a');
+fetchAllDiscussions();
 </script>
 
 <template>

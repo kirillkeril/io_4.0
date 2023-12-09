@@ -8,14 +8,21 @@ export const useDiscussionStore = defineStore('discussion', () => {
 
 	const currentDiscussion: Ref<Discussoin | null> = ref(null);
 
-	const fetchAllDiscussions = async () => {
-		axios.get('http://localhost:3001/api/discussion').then((response) => {
+	const fetchAllDiscussions = () => {
+		axios.get('https://mg.vp-pspu.cf/api/discussion').then((response) => {
 			allDiscussions.value = response.data;
 		})
 	}
 
 	const setDiscussion = async (disc: Discussoin) => {
 		currentDiscussion.value = disc;
+
+		let newData = JSON.stringify({
+			providerId: disc?.providerId,
+			customerId: disc?.customerId
+		});
+
+		localStorage.setItem('currentIdenty', newData);
 	} 
 
 	return {allDiscussions, fetchAllDiscussions, setDiscussion, currentDiscussion }

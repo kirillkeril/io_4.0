@@ -2,11 +2,13 @@
 	<section class="document">
 		<div class="document__head">
 			<router-link to="/suppliers/discussion" class="document__title">
-				<InlineSvg svg="arrow-left"/>
+				<InlineSvg svg="arrow-left" />
 				<h1>Документация</h1>
 			</router-link>
-			<ButtonUI green link="/suppliers/discussion/document/specification" icon="check">Отправить на рассмотрение</ButtonUI>
+			<ButtonUI green link="/suppliers/discussion/document/specification" icon="check">Отправить на рассмотрение
+			</ButtonUI>
 		</div>
+		{{ currentDiscussion }}
 		<div class="document__body">
 			<DocumentBody />
 		</div>
@@ -16,8 +18,15 @@
 <script lang="ts">
 import InlineSvg from '../components/InlineSvg.vue';
 import DocumentBody from '../components/DocumentBody.vue';
+import { useDiscussionStore } from '../stores/discussion'
+import { storeToRefs } from 'pinia';
 
 export default {
+	setup() {
+		const { currentDiscussion } = storeToRefs(useDiscussionStore());
+
+		return { currentDiscussion };
+	},
 	name: 'DocumentPage',
 	components: {
 		InlineSvg,
