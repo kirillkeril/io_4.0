@@ -4,17 +4,15 @@
 			<ul>
 				<li>
 					<ButtonUI 
-						:active="getRouteName === '/discussion'" 
+						:active="getRouteName === 'suppliers'" 
 						trans 
-						link="discussion" 
+						link="/suppliers" 
 						icon="chat"
 					>Обсуждения</ButtonUI>
 				</li>
 				<li>
-					<ButtonUI 
-						:active="getRouteName === '/suppliers'" 
-						trans 
-						link="suppliers" 
+					<ButtonUI
+						trans
 						icon="user"
 					>Поставщики</ButtonUI>
 				</li>
@@ -54,7 +52,7 @@ export default {
 
 	watch: {
 		$route(to, from) {
-			this.actualPath = to.path
+			this.actualPath = to.path.split('/')[1];
 		}
 	}
 }

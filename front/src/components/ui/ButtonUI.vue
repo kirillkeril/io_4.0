@@ -6,6 +6,7 @@
 			'btn--blue-trans': blueTrans,
 			'btn--blue-fill': blueFill,
 			'btn--trans': trans,
+			'btn--green': green,
 			'is-active': active
 		}]"
 	>
@@ -19,6 +20,7 @@
 			'btn--blue-trans': blueTrans,
 			'btn--blue-fill': blueFill,
 			'btn--trans': trans,
+			'btn--green': green,
 			'is-active': active
 		}]"
 	>
@@ -43,6 +45,10 @@ export default {
 			default: false
 		},
 		trans: {
+			type: Boolean,
+			default: false
+		},
+		green: {
 			type: Boolean,
 			default: false
 		},
@@ -74,6 +80,17 @@ export default {
 	line-height: 1.5
 	cursor: pointer
 	transition: .3s all
+
+	&--green
+		background: $green
+		color: white
+
+		&:hover
+			background: #01C27D
+
+		&:active
+			transform: scale(.95)
+			
 
 	&--blue-trans
 		border: 1px solid $blue

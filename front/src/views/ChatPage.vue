@@ -29,8 +29,11 @@ const sendMessage = () => {
 <template>
   <section class="chat">
     <header class="chat_header">
-      <h1>Чат</h1>
-      <ButtonUI icon="document" blue-fill>Документация</ButtonUI>
+		<router-link to="/suppliers" class="chat_header-title">
+			<InlineSvg svg="arrow-left" />
+      		<h1>Чат</h1>
+		</router-link>
+      <ButtonUI icon="document" link="/suppliers/discussion/document" blue-fill>Документация</ButtonUI>
     </header>
     <main class="chat_main">
       <div class="chat_addressee">
@@ -121,6 +124,13 @@ const sendMessage = () => {
 			height: 52px
 			border-radius: 9999px
 			background-color: $grey
+	&_header-title
+		display: flex
+		align-items: center
+		grid-gap: 12px
+
+		& h1
+			font-size: 32px
 .messages
 	flex: 1
 	height: 100%
