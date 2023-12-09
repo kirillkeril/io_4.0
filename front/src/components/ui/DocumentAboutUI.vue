@@ -135,7 +135,7 @@ export default {
 				opacity: 1
 
 		& p
-			font-size: 14
+			font-size: 14px
 
 		.document-main__item-change
 			position: absolute
