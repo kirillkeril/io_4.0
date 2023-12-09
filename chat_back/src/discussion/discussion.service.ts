@@ -9,7 +9,7 @@ export class DiscussionService {
   constructor(
     @InjectModel(Discussion.name)
     private readonly discussionRepository: Model<Discussion>,
-  ) { }
+  ) {}
 
   async create(createDiscussionDto: CreateDiscussionDto) {
     const newDisc = await this.discussionRepository.create({
@@ -19,6 +19,7 @@ export class DiscussionService {
 
     newDisc.status = 'Ввод сведений';
     newDisc.type = '';
+    newDisc.messagesId = `${createDiscussionDto.customerId}:${createDiscussionDto.providerId}`;
     await newDisc.save();
     return newDisc;
   }

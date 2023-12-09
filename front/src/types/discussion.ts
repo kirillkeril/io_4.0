@@ -1,5 +1,5 @@
 export interface Discussoin {
-  privaderId: string;
+  providerId: string;
   customerId: string;
   status?: string;
   type?: string;

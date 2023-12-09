@@ -2,19 +2,35 @@
 import ButtonUI from '../components/ui/ButtonUI.vue';
 import MessageUI from '../components/ui/MessageUI.vue';
 import InlineSvg from '../components/InlineSvg.vue';
-import { Ref, ref } from 'vue';
+import { onMounted, Ref, ref } from 'vue';
 import { useMessagesStore } from '../stores/messages';
 import type { Message } from '../types/message';
 import { storeToRefs } from 'pinia';
+import { useDiscussionStore } from '../stores/discussion';
+import { useUserStore } from '../stores/users';
+import { useRouter } from 'vue-router';
+import { User } from '../types/user';
 
 const messagesStore = useMessagesStore();
 const { messages } = storeToRefs(messagesStore);
-const userId = `user`;
+const { user, getUserById } = useUserStore();
 const messageInput: Ref<string> = ref('');
+const { currentDiscussion } = storeToRefs(useDiscussionStore());
+const router = useRouter();
+
+const addressee: Ref<User | null> = ref(null);
 
 const sendMessage = () => {
+  if (!currentDiscussion.value) return;
+  if (!user) {
+    router.push('/');
+    return;
+  };
+
   const message: Message = {
-    authorId: userId,
+    messageId: `${currentDiscussion.value?.customerId}:${currentDiscussion.value?.providerId}`,
+    authorId: user!._id,
+    authorName: user!.fullname,
     text: messageInput.value
   }
   if (!message.text) return;
@@ -22,29 +38,41 @@ const sendMessage = () => {
   messageInput.value = '';
 }
 
+const getAddressee = async() => {
+  if(!currentDiscussion.value) return;
+  if(user!.role == 'customer')
+    addressee.value = await getUserById(currentDiscussion.value!.providerId);
+  if(user!.role == 'provider')
+    addressee.value = await getUserById(currentDiscussion.value!.customerId);
+}
+
+onMounted(() => {
+  messagesStore.bindEvents();
+  getAddressee();
+});
 </script>
 
 <template>
   <section class="chat">
     <header class="chat_header">
-		<router-link to="/suppliers" class="chat_header-title">
-			<InlineSvg svg="arrow-left" />
-      		<h1>Чат</h1>
-		</router-link>
+      <router-link to="/suppliers" class="chat_header-title">
+        <InlineSvg svg="arrow-left" />
+        <h1>Чат</h1>
+      </router-link>
       <ButtonUI icon="document" link="/suppliers/discussion/document" blue-fill>Документация</ButtonUI>
     </header>
     <main class="chat_main">
       <div class="chat_addressee">
         <img src="" alt="">
         <div class="addressee_data">
-          <span class="addressee_data_name">Даниил Мальцев</span>
-          <span class="addressee_data_company">ООО “СТЕНД АП ПЭНИС”</span>
+          <span class="addressee_data_name">{{ addressee?.fullname }}</span>
+          <span class="addressee_data_company">{{ addressee?.companyName }}</span>
         </div>
       </div>
 
       <div class="messages" style="overflow-y:auto">
         <div v-for="(msg, idx) in messages" :key="msg._id"
-          :class="msg.authorId == userId ? 'messages_internal' : 'messages_external'">
+          :class="msg.authorId == user?._id ? 'messages_internal' : 'messages_external'">
           <MessageUI :message="msg" :headless="messages[idx - 1]?.authorId === msg.authorId"
             :without-icon="messages[idx - 1]?.authorId == msg.authorId" />
         </div>
@@ -64,6 +92,7 @@ const sendMessage = () => {
 
 <style lang="scss" scoped>
 @import '../assets/sass/colors';
+
 .addressee_data {
   display: flex;
   flex-direction: column;
@@ -96,6 +125,11 @@ const sendMessage = () => {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    &-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
 
     h1 {
       font-size: 36px
@@ -183,4 +217,5 @@ const sendMessage = () => {
       width: 100%;
     }
   }
-}</style>
+}
+</style>

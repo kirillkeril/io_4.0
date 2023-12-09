@@ -16,5 +16,17 @@ export const useUserStore = defineStore('users', () => {
 		}
 	}
 
-	return {user, getUser}
+	const getUserById = async (id: string): Promise<User | null> => {
+		try {
+			const res = await axios.get<User>(`http://localhost:3001/api/users/${id}`);
+			console.log(res.data);
+			user.value = res.data;
+			return res.data;
+		} catch(e) {
+			console.log(e);
+			return null;
+		}
+	}
+
+	return {user, getUser, getUserById}
 });

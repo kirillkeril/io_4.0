@@ -38,20 +38,22 @@ import { User } from "../../types/user";
 import { Discussoin } from '../../types/discussion';
 import { useUserStore } from "../../stores/users";
 import { useRouter } from "vue-router";
+import { useDiscussionStore } from "../../stores/discussion";
 
 interface Props {
 	provider: User;
 }
 const { provider } = defineProps<Props>();
 const { user } = useUserStore();
+const { setDiscussion } = useDiscussionStore();
 const router = useRouter();
 
 const startDiscussion = async () => {
 	if (user == null) return;
-	const newDisck: Discussoin = { customerId: user!._id, privaderId: provider._id, startDate: Date.now().toLocaleString() };
+	const newDisck: Discussoin = { customerId: user!._id, providerId: provider._id, startDate: Date.now().toLocaleString() };
 	const res = await axios.post<Discussoin>('http://localhost:3001/api/discussion', newDisck);
-	console.log(res.data);
-	router.push('/suppliers/discussion');	
+	setDiscussion(res.data);
+	router.push('/suppliers/discussion');
 }
 </script>
 
