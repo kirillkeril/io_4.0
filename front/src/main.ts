@@ -14,6 +14,7 @@ import AboutPage from './views/AboutPage.vue'
 import UiPage from './views/UiPage.vue'
 import DiscussionPage from './views/ChatPage.vue'
 import SuppliersPage from './views/SuppliersPage.vue'
+import ChangesPage from './views/ChangesPage.vue'
 import DocumentPage from './views/DocumentPage.vue'
 import SpecificationPage from './views/SpecificationPage.vue'
 
@@ -26,28 +27,26 @@ const router = createRouter({
 		{ path: '/', component: HomePage },
 		{ path: '/about', component: AboutPage },
 		{ path: '/ui', component: UiPage },
-		{ 
-			path: '/suppliers', 
-			component: SuppliersPage,
-		},
+		{ path: '/discussion', component: DiscussionPage },
+		{ path: '/suppliers', component: SuppliersPage },
+		{ path: '/changes', component: ChangesPage },
 		{
-			path: '/suppliers/discussion', 
+			path: '/suppliers/discussion',
 			component: DiscussionPage,
 		},
 		{
-			path: '/suppliers/discussion/document', 
+			path: '/suppliers/discussion/document',
 			component: DocumentPage,
 		},
 		{
 			path: '/suppliers/discussion/document/specification', 
 			component: SpecificationPage,
 		}
-		// { path: '/suppliers', component: SuppliersPage },
 	]
 })
 
 components.forEach(component => {
-    app.component(component.name ?? "", component)
+	app.component(component.name ?? "", component)
 })
 
 app.use(router)
