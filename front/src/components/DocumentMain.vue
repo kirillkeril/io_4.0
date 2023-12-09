@@ -175,7 +175,7 @@
 					</div>
 				</div>
 			</div>
-			{{ lastVersionData }}
+			<!-- {{ lastVersionData }} -->
 		</div>
 	</div>
 </template>
@@ -204,18 +204,18 @@ import {useDocumentsStore} from '../stores/document';
 	})
 
 	const changeData = () => {
-		setNewFormData(form);
+		setNewFormData(form.value);
 	};
 	onMounted(
 		() => {
 			form.value = {
-				Avans: formProps?.avansMoney,
-				Number: formProps?.number,
-				Period: formProps?.dateStart,
-				Predmet: formProps?.itemContract,
-				Mesto: formProps?.place,
-				IKZ: formProps?.code,
-				Istochnik: formProps?.financing
+				Avans: lastVersionData.avans || formProps?.avansMoney,
+				Number: lastVersionData.number || formProps?.number,
+				Period: lastVersionData.perios || formProps?.dateStart,
+				Predmet: lastVersionData.predmet || formProps?.itemContract,
+				Mesto: lastVersionData.mesto || formProps?.place,
+				IKZ: lastVersionData.ikz || formProps?.code,
+				Istochnik: lastVersionData.istochnik || formProps?.financing
 			};
 
 			getLastVersion();

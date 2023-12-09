@@ -8,16 +8,15 @@ export const useDocumentsStore = defineStore('document', () => {
 	
 	const sendNewVersion = () => {
 		let local = JSON.parse(localStorage.getItem('currentIdenty'));
-		
+		console.log(formData.value);
 		formData.value.ProviderID = local.providerId;
 		formData.value.CustomerID = local.customerId;
-
+		console.log(formData.value);
 		axios.post('https://mg.vp-pspu.cf/back/compare-json', formData.value).then((response) => {
 			console.log(response);
 		})
 	}
 
-<<<<<<< HEAD:front/src/stores/document.ts
 	const getLastVersion = async () => {
 		let local = JSON.parse(localStorage.getItem('currentIdenty'));
 
@@ -32,9 +31,7 @@ export const useDocumentsStore = defineStore('document', () => {
 	}
 
 	const setNewFormData = (newData: Object) => {
-=======
-	const setNewFormData = (newData) => {
->>>>>>> c68c0b00e1080e48e03467d83d06e398974090d1:front/src/stores/document.js
+		console.log(newData);
 		formData.value = newData;
 	}
 
