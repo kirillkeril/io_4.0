@@ -2,65 +2,66 @@
 import ButtonUI from '../components/ui/ButtonUI.vue';
 import MessageUI from '../components/ui/MessageUI.vue';
 import InlineSvg from '../components/InlineSvg.vue';
-// import { onMounted, Ref, ref } from 'vue';
-// import { useMessagesStore } from '../stores/messages';
-// import type { Message } from '../types/message';
+import { onMounted, Ref, ref } from 'vue';
+import { useMessagesStore } from '../stores/messages';
+import type { Message } from '../types/message';
 
-// const { bindEvents, createMessage, items } = useMessagesStore();
-// const userId = `user:${Date.now()}`;
-// const messageInput: Ref<string> = ref('');
+const { bindEvents, createMessage, items } = useMessagesStore();
+const userId = `user:${Date.now()}`;
+const messageInput: Ref<string> = ref('');
 
-// // onMounted(() => {
-// // 	bindEvents();
-// });
+onMounted(() => {
+	bindEvents();
+});
 
-// const sentMessage = () => {
-// 	const message: Message = {
-//     authorId = '',
-// 		text: ''
-// 	}
-//   createMessage(message);
-// }
+const sendMessage = () => {
+  const message: Message = {
+    authorId = '',
+    text: messageInput.value
+  }
+  if(message.)
+  createMessage(message);
+}
 </script>
 
 <template>
-	<section class="chat">
-		<header class="chat_header">
-			<h1>Чат</h1>
-			<ButtonUI icon="document" blue-fill>Документация</ButtonUI>
-		</header>
-		<main class="chat_main">
-			<div class="chat_addressee">
-				<img src="" alt="">
-				<div class="addressee_data">
-					<span class="addressee_data_name">Даниил Мальцев</span>
-					<span class="addressee_data_company">ООО “СТЕНД АП ПЭНИС”</span>
-				</div>
-			</div>
-			<div class="messages">
-				<div class="messages_internal">
-					<MessageUI />
-					<MessageUI />
-					<MessageUI />
-					<MessageUI />
-				</div>
-				<div class="messages_external">
-					<MessageUI />
-					<MessageUI />
-					<MessageUI />
-					<MessageUI />
-					<MessageUI />
-				</div>
-			</div>
-			<form class="form">
-				<div class="form_input">
-					<InlineSvg svg="clip" />
-					<input />
-					<InlineSvg svg="send" />
-				</div>
-			</form>
-		</main>
-	</section>
+  <section class="chat">
+    <header class="chat_header">
+      <h1>Чат</h1>
+      <ButtonUI icon="document" blue-fill>Документация</ButtonUI>
+    </header>
+    <main class="chat_main">
+      <div class="chat_addressee">
+        <img src="" alt="">
+        <div class="addressee_data">
+          <span class="addressee_data_name">Даниил Мальцев</span>
+          <span class="addressee_data_company">ООО “СТЕНД АП ПЭНИС”</span>
+        </div>
+      </div>
+      <div class="messages">
+        <div class="messages_internal">
+          <MessageUI />
+          <MessageUI />
+          <MessageUI />
+          <MessageUI />
+        </div>
+        <div class="messages_external">
+          <MessageUI />
+          <MessageUI />
+          <MessageUI />
+          <MessageUI />
+          <MessageUI />
+        </div>
+      </div>
+      <form class="form">
+        <div class="form_input">
+          <InlineSvg svg="clip" />
+          <input />
+          <InlineSvg svg="send" @click="() => sendMessage()"/>
+        </div>
+      </form>
+    </main>
+  </section>
 </template>
 
 
