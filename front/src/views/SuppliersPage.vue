@@ -9,7 +9,7 @@
 	</section>
 </template>
 
-<script>
+<script lang="ts">
 import DiscussionTable from '../components/DiscussionTable.vue'
 
 export default {

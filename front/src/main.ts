@@ -14,6 +14,7 @@ import AboutPage from './views/AboutPage.vue'
 import UiPage from './views/UiPage.vue'
 import DiscussionPage from './views/ChatPage.vue'
 import SuppliersPage from './views/SuppliersPage.vue'
+import ChangesPage from './views/ChangesPage.vue'
 
 const pinia = createPinia()
 const app = createApp(App)
@@ -26,6 +27,7 @@ const router = createRouter({
 		{ path: '/ui', component: UiPage },
 		{ path: '/discussion', component: DiscussionPage },
 		{ path: '/suppliers', component: SuppliersPage },
+		{ path: '/changes', component: ChangesPage },
 	]
 })
 
