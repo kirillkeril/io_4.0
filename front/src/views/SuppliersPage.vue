@@ -3,20 +3,33 @@
 		<div class="suppliers__title">
 			<h1>Обсуждение</h1>
 		</div>
+		{{ fetchAllDiscussions }}
 		<div class="suppliers__body">
 			<DiscussionTable />
 		</div>
+		
 	</section>
 </template>
 
 <script lang="ts">
+import { useDiscussionStore } from '../stores/discussion'
+import { storeToRefs } from 'pinia'
 import DiscussionTable from '../components/DiscussionTable.vue'
 
 export default {
 	name: 'SuppliersPage',
 	components: {
 		DiscussionTable
-	}
+	},
+	setup() {
+		const discussionStore = useDiscussionStore();
+		const { allDiscussions } = storeToRefs(discussionStore);
+		const { fetchAllDiscussions } = discussionStore;
+		return { allDiscussions, fetchAllDiscussions }
+	},
+	mounted() {
+		this.fetchAllDiscussions();
+	},
 }
 </script>
 
