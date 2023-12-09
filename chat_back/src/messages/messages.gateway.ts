@@ -8,6 +8,7 @@ import {
 import { MessagesService } from './messages.service';
 import { CreateMessageDto } from './dto/create-message.dto';
 import { Socket } from 'node:net';
+import { json } from 'stream/consumers';
 
 @WebSocketGateway({
   cors: {
@@ -18,24 +19,26 @@ export class MessagesGateway {
   constructor(private readonly messagesService: MessagesService) { }
   clients: Set<Socket> = new Set();
 
-  @SubscribeMessage('createMessage')
-  create(
+  @SubscribeMessage('newMessage')
+  async create(
     @MessageBody() createMessageDto: CreateMessageDto,
     @ConnectedSocket() client: Socket,
   ) {
     this.clients.add(client);
-    const message = this.messagesService.create(createMessageDto);
+    const message = await this.messagesService.create(createMessageDto);
+    console.log(this.clients.size);
     this.clients.forEach((c) => {
-      c.emit('message', message);
+      c.emit('message', JSON.stringify(message));
     });
   }
 
   @SubscribeMessage('findAllMessages')
-  findAll(@ConnectedSocket() client: Socket) {
+  async findAll(@ConnectedSocket() client: Socket) {
     this.clients.add(client);
-    const messages = this.messagesService.findAll();
+    const messages = await this.messagesService.findAll();
+    console.log(messages);
     this.clients.forEach((c) => {
-      c.emit('message', messages);
+      c.emit('message', JSON.stringify(messages));
     });
   }
 }
