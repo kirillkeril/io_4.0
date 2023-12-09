@@ -1,13 +1,17 @@
 FROM node:16.18.0
 
+RUN npm install -g http-server
+
 WORKDIR /app
 
-COPY . .
+COPY package*.json ./
 
 RUN npm install
 
+COPY . .
+
 RUN npm run build
 
-EXPOSE 5173
+EXPOSE 3000
 
-CMD ["npm", "run","dev"]
+CMD ["http-server","dist"]
