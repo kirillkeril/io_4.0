@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import ButtonUI from '../components/ui/ButtonUI.vue';
+/* @ts-ignore */
 import MessageUI from '../components/ui/MessageUI.vue';
+/* @ts-ignore */
 import InlineSvg from '../components/InlineSvg.vue';
 import { onMounted, Ref, ref } from 'vue';
 import { useMessagesStore } from '../stores/messages';
@@ -17,6 +19,7 @@ const { messages } = storeToRefs(messagesStore);
 const { user, getUserById } = useUserStore();
 const messageInput: Ref<string> = ref('');
 const { currentDiscussion } = storeToRefs(useDiscussionStore());
+/* @ts-ignore */
 const { getCurrentDiscussion } = useDiscussionStore();
 const router = useRouter();
 

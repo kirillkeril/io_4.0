@@ -37,5 +37,7 @@ export const useDocumentsStore = defineStore('document', () => {
 		formData.value = newData;
 	}
 
+	
+
 	return {sendNewVersion, setNewFormData, getLastVersion, lastVersionData}
 });

@@ -37,20 +37,13 @@
 						<p>Аванс (₽)</p>
 						<div class="document-main__item-avans">
 							<div class="checkbox">
-								<input type="checkbox" id="avans" name="avans" :checked="form.Avans > 0" @change="changeData"/>
+								<input type="checkbox" id="avans" name="avans" :checked="form.Avans > 0" @change="changeData" />
 								<label for="avans">
-									<InlineSvg svg="check" class="checkbox-check"/>
+									<InlineSvg svg="check" class="checkbox-check" />
 								</label>
 							</div>
-							<input 
-								type="number" 
-								id="avans-money" 
-								name="avans-money" 
-								placeholder="Размер аванса"
-								class="input" 
-								v-model="form.Avans"
-								@change="changeData"
-							/>
+							<input type="number" id="avans-money" name="avans-money" placeholder="Размер аванса" class="input"
+								v-model="form.Avans" @change="changeData" />
 						</div>
 					</div>
 				</div>
@@ -62,15 +55,8 @@
 							<InlineSvg svg="change" />
 						</button>
 						<p>Номер*</p>
-						<input 
-							type="text" 
-							id="number" 
-							name="number" 
-							placeholder="ПРМ-0845/1123"
-							class="input" 
-							v-model="form.Number"
-							@change="changeData"
-						/>
+						<input type="text" id="number" name="number" placeholder="ПРМ-0845/1123" class="input" v-model="form.Number"
+							@change="changeData" />
 					</div>
 					<div class="document-main__item">
 						<button class="document-main__item-change">
@@ -80,27 +66,13 @@
 						<div class="document-main__item-date">
 							<div>
 								<p>с</p>
-								<input 
-									type="text" 
-									id="before" 
-									name="before" 
-									placeholder="23.12.2023"
-									class="input"
-									v-model="form.Period" 
-									@change="changeData"
-								/>
+								<input type="text" id="before" name="before" placeholder="23.12.2023" class="input" v-model="form.Period"
+									@change="changeData" />
 							</div>
 							<div>
 								<p>по</p>
-								<input 
-									type="text" 
-									id="after" 
-									name="after" 
-									placeholder="23.12.2023"
-									class="input" 
-									v-model="form.dateEnd" 
-									@change="changeData"
-								/>
+								<input type="text" id="after" name="after" placeholder="23.12.2023" class="input" v-model="form.DateEnd"
+									@change="changeData" />
 							</div>
 						</div>
 					</div>
@@ -110,45 +82,25 @@
 						<InlineSvg svg="change" />
 					</button>
 					<p>Предмет контракта*</p>
-					<textarea 
-						type="text" 
-						id="item-contract" 
-						name="item-contract" 
+					<textarea type="text" id="item-contract" name="item-contract"
 						placeholder="Провод монтажный витой Мезонин 2х1,5 мм в декоративной оплетке для отрытой проводки"
-						class="input"
-						v-model="form.Predmet" 
-						@change="changeData"
-					></textarea>
+						class="input" v-model="form.Predmet" @change="changeData"></textarea>
 				</div>
 				<div class="document-main__item">
 					<button class="document-main__item-change">
 						<InlineSvg svg="change" />
 					</button>
 					<p>Место заключения*</p>
-					<input 
-						type="text" 
-						id="place" 
-						name="place" 
-						placeholder="Пермь, пр. Мира, д. 1"
-						class="input" 
-						v-model="form.Mesto" 
-						@change="changeData"
-					>
+					<input type="text" id="place" name="place" placeholder="Пермь, пр. Мира, д. 1" class="input"
+						v-model="form.Mesto" @change="changeData">
 				</div>
 				<div class="document-main__item">
 					<button class="document-main__item-change">
 						<InlineSvg svg="change" />
 					</button>
 					<p>ИД-код закупки* (36 цифр)</p>
-					<input 
-						type="text" 
-						id="code" 
-						name="code" 
-						placeholder="221230104092423010100101370018425244"
-						class="input" 
-						v-model="form.IKZ" 
-						@change="changeData"
-					>
+					<input type="text" id="code" name="code" placeholder="221230104092423010100101370018425244" class="input"
+						v-model="form.IKZ" @change="changeData">
 				</div>
 				<div class="document-main__item">
 					<button class="document-main__item-change">
@@ -156,19 +108,12 @@
 					</button>
 					<p>Источник финансирования*</p>
 					<div class="document-main__item-nds">
-						<input 
-							type="text" 
-							id="financing" 
-							name="financing" 
-							placeholder="«Смешанное» финансирование"
-							class="input" 
-							v-model="form.Istochnik" 
-							@change="changeData"
-						>
+						<input type="text" id="financing" name="financing" placeholder="«Смешанное» финансирование" class="input"
+							v-model="form.Istochnik" @change="changeData">
 						<div class="checkbox">
-							<input type="checkbox" id="nds" name="nds" v-model="form.nds" @change="changeData"/>
+							<input type="checkbox" id="nds" name="nds" v-model="form.Nds" @change="changeData" />
 							<label for="nds">
-								<InlineSvg svg="check" class="checkbox-check"/>
+								<InlineSvg svg="check" class="checkbox-check" />
 							</label>
 							<p>НДС не облагается</p>
 						</div>
@@ -182,49 +127,57 @@
 
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
+/* @ts-ignore */
 import InlineSvg from '../components/InlineSvg.vue';
-import {useDocumentsStore} from '../stores/document';
-	const {
-		formProps
-	} = defineProps();
+import { useDocumentsStore } from '../stores/document';
 
-	const { setNewFormData } = useDocumentsStore();
-	const { getLastVersion } = useDocumentsStore();
-	const lastVersionData = useDocumentsStore();
+interface Props {
+	fromPros?: any;
+}
+/* @ts-ignore */
+const { formProps } = defineProps<Props>();
 
-	const form = ref({
-		Avans: null,
-		Number: null,
-		Period: null,
-		Predmet: null,
-		Mesto: null,
-		IKZ: null,
-		Istochnik: null,
-	})
+const { setNewFormData } = useDocumentsStore();
+const { getLastVersion } = useDocumentsStore();
+const lastVersionData = useDocumentsStore();
 
-	const changeData = () => {
-		setNewFormData(form.value);
-	};
-	onMounted(
-		() => {
-			getLastVersion();
+const form = ref({
+	DateEnd: null,
+	Avans: null,
+	Number: null,
+	Period: null,
+	Predmet: null,
+	Mesto: null,
+	IKZ: null,
+	Istochnik: null,
+	Nds: null,
+})
 
-			setTimeout(() => {
-				let data = JSON.parse(JSON.stringify(lastVersionData)).lastVersionData;
-				console.log(data);
-				form.value = {
-					Avans: data?.Avans,
-					Number: data?.Number,
-					Period: data?.Period,
-					Predmet: data?.Predmet,
-					Mesto: data?.Mesto,
-					IKZ: data?.IKZ,
-					Istochnik: data?.Istochnik
-				};
-			}, 1500);
-			
-		}
-	)
+const changeData = () => {
+	setNewFormData(form.value);
+};
+onMounted(
+	() => {
+		getLastVersion();
+
+		setTimeout(() => {
+			let data = JSON.parse(JSON.stringify(lastVersionData)).lastVersionData;
+			console.log(data);
+			form.value = {
+				DateEnd: data?.DateEnd,
+				Avans: data?.Avans,
+				Number: data?.Number,
+				Period: data?.Period,
+				Predmet: data?.Predmet,
+				Mesto: data?.Mesto,
+				IKZ: data?.IKZ,
+				Istochnik: data?.Istochnik,
+				Nds: data?.Nds,
+			};
+		}, 1500);
+
+	}
+)
 </script>
 
 <style lang="sass" scoped>
