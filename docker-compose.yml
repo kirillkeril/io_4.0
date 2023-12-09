@@ -33,6 +33,13 @@ services:
       - custom
     depends_on:
       - db
+#  client:
+#    container_name: client
+#    build: front/
+#    ports:
+#      - 0.0.0.0:3000:3000
+#    networks:
+#      - custom
 
 networks:
   custom:
