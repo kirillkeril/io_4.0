@@ -3,13 +3,17 @@
 		<div class="suppliers__title">
 			<h1>Обсуждение</h1>
 		</div>
+		{{ fetchAllDiscussions }}
 		<div class="suppliers__body">
 			<DiscussionTable :providers="providers"/>
 		</div>
+		
 	</section>
 </template>
 
 <script lang="ts" setup>
+import { useDiscussionStore } from '../stores/discussion'
+import { storeToRefs } from 'pinia'
 import axios from 'axios'
 import DiscussionTable from '../components/DiscussionTable.vue'
 import { User } from '../types/user'
