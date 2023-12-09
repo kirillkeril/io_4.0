@@ -7,11 +7,17 @@
       <div class="for_review">
         <h2>К рассмотрению</h2>
         <div class="for-review_items">
-          <ReviewItem />
+          <ReviewItem :badges="[{text: 'От заказчика', color: '#3366ff'}, {text: 'На рассмотрении', color: '#ff8761'}]"/>
         </div>
       </div>
       <div class="changes_archive">
         <h2>Архив изменений</h2>
+        <div class="for-review_items">
+          <ReviewItem :badges="[{text: 'От заказчика', color: '#3fe'}]" old/>
+          <ReviewItem :badges="[{text: 'От заказчика', color: '#3fe'}]" old/>
+          <ReviewItem :badges="[{text: 'От заказчика', color: '#3fe'}]" old/>
+          <ReviewItem :badges="[{text: 'От заказчика', color: '#3fe'}]" old/>
+        </div>
       </div>
     </main>
   </section>
@@ -46,6 +52,7 @@ import ReviewItem from "../components/ReviewItem.vue";
     padding: 36px
     display: flex
     flex-direction: column
+    gap: 26px
 
     h2
       color: $dark-blue

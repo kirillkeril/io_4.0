@@ -1,13 +1,12 @@
 <template>
-  <div class="review">
+  <div :class="`review review${old ? '_old' : ''}`">
     <div class="review_info" @click.prevent="() => isOpen = !isOpen">
       <div class="review_info_data">
         <span class="review_info_time">
           От 24.12.2023
-          <span class="review_info_deadline">(осталось 2 рабочих дня)</span>
+          <span v-if="!old" class="review_info_deadline">(осталось 2 рабочих дня)</span>
         </span>
-        <BadgeUI text="От заказчика" color="#36f" />
-        <BadgeUI text="На рассмотрении" color="#FF8761" />
+        <BadgeUI v-for="i in badges" :key="i.text" class="badge" :text="i.text" :color="i.color" />
       </div>
       <InlineSvg svg="chevron-down" :class="`icon icon${isOpen ? '_active' : ''}`" />
     </div>
@@ -18,11 +17,12 @@
         <div class="review_main_changes">
           <label for="name" class="review_main_field">
             <span>Предмет контракта</span>
-            <textarea name="name" placeholder="Провод монтажный витой Мезонин 2х1,5 мм в декоративной оплетке для отрытой проводки"/>
+            <textarea name="name"
+              placeholder="Провод монтажный витой Мезонин 2х1,5 мм в декоративной оплетке для отрытой проводки" />
           </label>
           <label for="name" class="review_main_field">
             <span>Место заключения</span>
-            <textarea name="name" placeholder="Очко динозавтра"/>
+            <textarea name="name" placeholder="Очко динозавтра" />
           </label>
         </div>
       </div>
@@ -31,18 +31,20 @@
         <div class="review_main_changes">
           <label for="name" class="review_main_field">
             <span>Предмет контракта</span>
-            <textarea name="name" placeholder="Провод монтажный витой Мезонин 2х1,5 мм в декоративной оплетке для отрытой проводки" />
+            <textarea name="name"
+              placeholder="Провод монтажный витой Мезонин 2х1,5 мм в декоративной оплетке для отрытой проводки" />
           </label>
           <label for="name" class="review_main_field">
             <span>Место заключения</span>
-            <textarea name="name" placeholder="Очко динозавтра"/>
+            <textarea name="name" placeholder="Очко динозавтра" />
           </label>
         </div>
       </div>
       <footer class="review_main_footer">
-        <textarea class="comment" value="'Цена единицы дополнительно поставляемого Товара или цена единицы Товара при уменьшении предусмотренного Договором количества поставляемого Товара должна определяться как частное от деления первоначальной цены Договора на предусмотренное в Договоре количество Товара'"/>
-        <div class="buttons">
-          <ButtonUI blue-trans >Аргументировать отказ</ButtonUI>
+        <textarea class="comment"
+          value="'Цена единицы дополнительно поставляемого Товара или цена единицы Товара при уменьшении предусмотренного Договором количества поставляемого Товара должна определяться как частное от деления первоначальной цены Договора на предусмотренное в Договоре количество Товара'" />
+        <div class="buttons" v-if="!old">
+          <ButtonUI blue-trans>Аргументировать отказ</ButtonUI>
           <ButtonUI blue-fill icon="check">Принять</ButtonUI>
         </div>
       </footer>
@@ -52,15 +54,29 @@
 
 <script setup lang="ts">
 import BadgeUI from './ui/BadgeUI.vue';
-import InlineSvg from './InlineSvg.vue';
 import ButtonUI from './ui/ButtonUI.vue';
 import { Ref, ref } from 'vue';
 
+interface Props {
+  old?: boolean;
+  badges: { text: string, color: string }[]
+}
+
 const isOpen: Ref<boolean> = ref(false);
+const { old, badges } = defineProps<Props>();
 </script>
 
 <style lang="sass" scoped>
 @import '../assets/sass/colors'
+.review_old
+  background: #fff !important
+  .badge
+    background: $grey
+  h3 span 
+    color: $dark-blue !important 
+  textarea, input
+    pointer-events: none 
+
 .review_main
   transition: transform 0.4s opacity 0.2s
   margin-top: 24px

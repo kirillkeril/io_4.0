@@ -29,7 +29,7 @@ const router = createRouter({
 		{ path: '/ui', component: UiPage },
 		{ path: '/discussion', component: DiscussionPage },
 		{ path: '/suppliers', component: SuppliersPage },
-		{ path: '/changes', component: ChangesPage },
+		{ path: '/suppliers/discussion/document/changes', component: ChangesPage },
 		{
 			path: '/suppliers/discussion',
 			component: DiscussionPage,

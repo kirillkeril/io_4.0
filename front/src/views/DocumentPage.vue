@@ -8,7 +8,6 @@
 			<ButtonUI green link="/suppliers/discussion/document/specification" icon="check">Отправить на рассмотрение
 			</ButtonUI>
 		</div>
-		{{ currentDiscussion }}
 		<div class="document__body">
 			<DocumentBody />
 		</div>
