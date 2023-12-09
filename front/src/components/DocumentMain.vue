@@ -175,61 +175,52 @@
 					</div>
 				</div>
 			</div>
+			{{ lastVersionData }}
 		</div>
 	</div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
+import { onMounted, ref } from 'vue';
 import InlineSvg from '../components/InlineSvg.vue';
 import {useDocumentsStore} from '../stores/document';
+	const {
+		formProps
+	} = defineProps();
 
-export default {
-	name: 'DocumentMain',
-	props: {
-		formProps: {
-			type: Object,
-			default: {}
-		}
-	},
-	setup() {
-		const { setNewFormData } = useDocumentsStore();
+	const { setNewFormData } = useDocumentsStore();
+	const { getLastVersion } = useDocumentsStore();
+	const lastVersionData = useDocumentsStore();
 
-		return { setNewFormData };
-	},
-	data() {
-		return {
-			form: {
-				avansMoney: null,
-				number: null,
-				dateStart: null,
-				dateEnd: null,
-				itemContract: null,
-				place: null,
-				code: null,
-				financing: null
-			}
+	const form = ref({
+		avansMoney: null,
+		number: null,
+		dateStart: null,
+		dateEnd: null,
+		itemContract: null,
+		place: null,
+		code: null,
+		financing: null
+	})
+
+	const changeData = () => {
+		setNewFormData(form);
+	};
+	onMounted(
+		() => {
+			form.value = {
+				Avans: formProps?.avansMoney,
+				Number: formProps?.number,
+				Period: formProps?.dateStart,
+				Predmet: formProps?.itemContract,
+				Mesto: formProps?.place,
+				IKZ: formProps?.code,
+				Istochnik: formProps?.financing
+			};
+
+			getLastVersion();
 		}
-	},
-	methods: {
-		changeData() {
-			this.setNewFormData(this.form);
-		}
-	},
-	mounted() {
-		this.form = {
-			Avans: this.formProps.avansMoney,
-			Number: this.formProps.number,
-			Period: this.formProps.dateStart,
-			Predmet: this.formProps.itemContract,
-			Mesto: this.formProps.place,
-			IKZ: this.formProps.code,
-			Istochnik: this.formProps.financing
-		}
-	},
-	components: {
-		InlineSvg
-	}
-}
+	)
 </script>
 
 <style lang="sass" scoped>
