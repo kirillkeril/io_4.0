@@ -5,28 +5,28 @@
 				<InlineSvg svg="arrow-left" />
 				<h1>Документация</h1>
 			</router-link>
-			<ButtonUI green link="/suppliers/discussion/document/specification" icon="check">Отправить на рассмотрение
+			<ButtonUI green icon="check" @click="sendNewVersion">Отправить на рассмотрение
 			</ButtonUI>
 		</div>
 		<div class="document__body">
 			<DocumentBody />
 		</div>
+		<!-- link="/suppliers/discussion/document/specification" -->
 	</section>
 </template>
 
 <script lang="ts">
 import InlineSvg from '../components/InlineSvg.vue';
 import DocumentBody from '../components/DocumentBody.vue';
-import { useDiscussionStore } from '../stores/discussion'
-import { storeToRefs } from 'pinia';
+import {useDocumentsStore} from '../stores/document';
 
 export default {
-	setup() {
-		const { currentDiscussion } = storeToRefs(useDiscussionStore());
-
-		return { currentDiscussion };
-	},
 	name: 'DocumentPage',
+	setup() {
+		const { sendNewVersion } = useDocumentsStore();
+
+		return { sendNewVersion };
+	},
 	components: {
 		InlineSvg,
 		DocumentBody
