@@ -9,7 +9,7 @@ export const useDiscussionStore = defineStore('discussion', () => {
 	const currentDiscussion: Ref<Discussoin | null> = ref(null);
 
 	const fetchAllDiscussions = () => {
-		axios.get('https://mg.vp-pspu.cf/api/discussion').then((response) => {
+		axios.get('http://localhost:3001/api/discussion').then((response) => {
 			allDiscussions.value = response.data;
 		})
 	}

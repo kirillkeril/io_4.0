@@ -39,10 +39,10 @@ const getChanges = async () => {
   await getCurrentDiscussion();
   const providerId =  currentDiscussion.value.providerId;
   const customerId =  currentDiscussion.value.customerId;
-  const res = await axios.get(`https://mg.vp-pspu.cf/back/get_all_versions/?ProviderID=${providerId}&CustomerID=${customerId}`);
+  const res = await axios.get(`http://localhost:3001/back/get_all_versions/?ProviderID=${providerId}&CustomerID=${customerId}`);
   allChanges.value = res.data;
   allChanges.value.forEach(async (c) => {
-    const res = await axios.get(`https://mg.vp-pspu.cf/back/get_difference?_id=${c._id}`);
+    const res = await axios.get(`http://localhost:3001/back/get_difference?_id=${c._id}`);
     changes.value.push(res.data);
   });
 };

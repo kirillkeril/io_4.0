@@ -10,12 +10,14 @@ import { useDiscussionStore } from '../stores/discussion';
 import { useUserStore } from '../stores/users';
 import { useRouter } from 'vue-router';
 import { User } from '../types/user';
+import axios from 'axios';
 
 const messagesStore = useMessagesStore();
 const { messages } = storeToRefs(messagesStore);
 const { user, getUserById } = useUserStore();
 const messageInput: Ref<string> = ref('');
 const { currentDiscussion } = storeToRefs(useDiscussionStore());
+const { getCurrentDiscussion } = useDiscussionStore();
 const router = useRouter();
 
 const addressee: Ref<User | null> = ref(null);
@@ -38,13 +40,27 @@ const sendMessage = () => {
   messageInput.value = '';
 }
 
-const getAddressee = async() => {
-  if(!currentDiscussion.value) return;
-  if(user!.role == 'customer')
+const getAddressee = async () => {
+  if (!currentDiscussion.value) return;
+  if (user!.role == 'customer')
     addressee.value = await getUserById(currentDiscussion.value!.providerId);
-  if(user!.role == 'provider')
+  if (user!.role == 'provider')
     addressee.value = await getUserById(currentDiscussion.value!.customerId);
 }
+
+const file = ref('');
+
+const sendFile = async () => {
+  const formdata = new FormData();
+  formdata.append("file", file.value);
+  const res = await axios.post('https://mg.vp-pspu.cf/', formdata, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  });
+  console.log(res.data);
+}
+
 
 onMounted(() => {
   messagesStore.bindEvents();
@@ -60,7 +76,7 @@ onMounted(() => {
         <h1>Чат</h1>
       </router-link>
       <ButtonUI icon="document" link="/suppliers/discussion/document" blue-fill>Документация</ButtonUI>
-    </header>
+    </header>{{ user.fullname }}
     <main class="chat_main">
       <div class="chat_addressee">
         <img src="" alt="">
@@ -80,7 +96,10 @@ onMounted(() => {
 
       <form class="form" @submit.prevent="() => sendMessage()">
         <div class="form_input">
-          <InlineSvg svg="clip" />
+          <label class="file-upload-container">
+            <InlineSvg svg="clip" />
+            <input @change.prevent="sendFile" ref="file" accept=".docx, .doc, .pdf, .xlsx," class="file-upload" type="file" icon="clip" style="padding: 0">
+          </label>
           <input v-model="messageInput" />
           <ButtonUI icon="send" style="padding: 0" type="subimit"></ButtonUI>
         </div>
@@ -125,6 +144,7 @@ onMounted(() => {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
     &-title {
       display: flex;
       align-items: center;
@@ -196,6 +216,10 @@ onMounted(() => {
   justify-content: center;
   align-items: center;
   width: 100%;
+
+  .file-upload {
+    display: none;
+  }
 
   &_input {
     border-radius: 10px;
