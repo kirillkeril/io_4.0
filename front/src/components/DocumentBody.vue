@@ -18,7 +18,7 @@
 	</div>
 </template>
 
-<script>
+<script lang="ts">
 import InlineSvg from '../components/InlineSvg.vue';
 import DocumentMain from '../components/DocumentMain.vue';
 import DocumentAbout from '../components/DocumentAbout.vue';

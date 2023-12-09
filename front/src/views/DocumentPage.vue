@@ -13,7 +13,7 @@
 	</section>
 </template>
 
-<script>
+<script lang="ts">
 import InlineSvg from '../components/InlineSvg.vue';
 import DocumentBody from '../components/DocumentBody.vue';
 

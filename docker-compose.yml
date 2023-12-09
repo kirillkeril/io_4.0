@@ -19,21 +19,21 @@ services:
   back:
     container_name: back
     build: chat_back/
-    ports:
-      - 0.0.0.0:5000:3000
+#    ports:
+#      - 0.0.0.0:5000:3001
     networks:
       - custom
     depends_on:
       - db
 
-  client:
-    container_name: client
-    build: front/
-    ports:
-      - 0.0.0.0:3000:3000
+  python:
+    container_name: python
+    build: 2TenderHackTransformApi-main
     networks:
       - custom
-      
+    depends_on:
+      - db
+
 networks:
   custom:
     driver: bridge

@@ -29,7 +29,7 @@
 	</div>
 </template>
 
-<script>
+<script lang="ts">
 import InlineSvg from '../components/InlineSvg.vue';
 import SpecificationList from '../components/SpecificationList.vue';
 

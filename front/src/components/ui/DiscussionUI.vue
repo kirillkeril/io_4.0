@@ -50,8 +50,12 @@ const router = useRouter();
 
 const startDiscussion = async () => {
 	if (user == null) return;
+	else {
+		console.log('adsadsa');
+		
+	}
 	const newDisck: Discussoin = { customerId: user!._id, providerId: provider._id, startDate: Date.now().toLocaleString() };
-	const res = await axios.post<Discussoin>('https://ai.vp-pspu.cf/api/discussion', newDisck);
+	const res = await axios.post<Discussoin>('http://localhost:3001/api/discussion', newDisck);
 	setDiscussion(res.data);
 	router.push('/suppliers/discussion');
 }

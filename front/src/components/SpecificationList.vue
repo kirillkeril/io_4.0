@@ -15,7 +15,7 @@
 	</div>
 </template>
 
-<script>
+<script lang="ts">
 import InlineSvg from '../components/InlineSvg.vue';
 
 export default {
