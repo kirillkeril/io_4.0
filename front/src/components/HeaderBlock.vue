@@ -2,7 +2,7 @@
 	<header class="header">
 		<img src="../assets/img/logo.png" alt="logo" class="header__logo" />
 		<div class="header__profile">
-			<p>Ксения Кремнева</p>
+			<p>{{ user?.fullname }}</p>
 			<div class="header__profile-img">
 				<img src="../assets/img/user.png" alt="profile" />
 			</div>
@@ -10,10 +10,11 @@
 	</header>
 </template>
 
-<script lang="ts">
-export default {
-	name: 'HeaderBlock'
-}
+<script lang="ts" setup>
+import { storeToRefs } from "pinia";
+import { useUserStore } from "../stores/users";
+
+const {user} = storeToRefs(useUserStore());
 </script>
 
 <style lang="sass" scoped>

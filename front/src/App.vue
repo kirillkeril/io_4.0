@@ -2,14 +2,17 @@
 import HeaderBlock from "./components/HeaderBlock.vue";
 import FooterBlock from "./components/FooterBlock.vue";
 import NavBar from "./components/NavBar.vue";
+import { useUserStore } from './stores/users';
 import { useMessagesStore } from "./stores/messages";
 import { socket } from "./socket";
 
 const { bindEvents } = useMessagesStore();
+const { getUser } = useUserStore();
 // remove any existing listeners (after a hot module replacement)
 socket.off();
 
 bindEvents();
+getUser('65740cec0b6595f685248363');
 </script>
 
 <template>
@@ -34,3 +37,11 @@ bindEvents();
 		display: flex
 
 </style>
+
+function useUserStore() {
+  throw new Error("Function not implemented.");
+}
+
+function useUserStore(): { getUser: any; } {
+  throw new Error("Function not implemented.");
+}
