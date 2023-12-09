@@ -1,6 +1,6 @@
 <template>
 	<header class="header">
-		<img src="../assets/img/logo.png" alt="logo" />
+		<img src="../assets/img/logo.png" alt="logo" class="header__logo" />
 		<div class="header__profile">
 			<p>Ксения Кремнева</p>
 			<div class="header__profile-img">
@@ -24,6 +24,9 @@ export default {
 	padding: 28px 24px
 	background: #fff
 
+	&__logo
+		width: 168px
+
 	&__profile
 		display: flex
 		align-items: center
@@ -39,7 +42,7 @@ export default {
 			font-weight: 600
 
 	&__profile-img
-		width: 52px
+		width: 42px
 		aspect-ratio: 1
 		position: relative
 		overflow: hidden

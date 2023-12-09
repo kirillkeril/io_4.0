@@ -19,10 +19,16 @@
 					>Поставщики</ButtonUI>
 				</li>
 				<li>
-					<ButtonUI trans icon="trending-up">Аналитика</ButtonUI>
+					<ButtonUI 
+						trans 
+						icon="trending-up"
+					>Аналитика</ButtonUI>
 				</li>
 				<li>
-					<ButtonUI trans icon="document">Архив</ButtonUI>
+					<ButtonUI 
+						trans 
+						icon="document"
+					>Архив</ButtonUI>
 				</li>
 			</ul>
 			<ButtonUI trans icon="logout">Выйти</ButtonUI>
