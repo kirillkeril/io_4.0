@@ -18,19 +18,19 @@ import { useDiscussionStore } from '../stores/discussion'
 
 import DiscussionTable from '../components/DiscussionTable.vue'
 
-import { User } from '../types/user'
-import { Document } from '../types/document'
+// import { User } from '../types/user'
+// import { Document } from '../types/document'
 
-import { computed, onMounted, Ref, ref } from 'vue'
+import { computed, onMounted} from 'vue'
 
-const users: Ref<User[]> = ref([]);
-const discussion: Ref<Document[]> = ref([]);
+// const users: Ref<User[]> = ref([]);
+// const discussion: Ref<Document[]> = ref([]);
 
 const { fetchAllProviders } = useProvidersStore();
 const { fetchAllDiscussions } = useDiscussionStore();
 
 const { allProviders } = storeToRefs(useProvidersStore());
-const { allDiscussion } = storeToRefs(useDiscussionStore());
+// const { allDiscussion } = storeToRefs(useDiscussionStore());
 
 onMounted(() => {
 	fetchAllProviders();

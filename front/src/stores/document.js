@@ -7,6 +7,7 @@ export const useDocumentsStore = defineStore('document', () => {
 	
 	const sendNewVersion = () => {
 		let local = JSON.parse(localStorage.getItem('currentIdenty'));
+		
 		formData.value.ProviderID = local.providerId;
 		formData.value.CustomerID = local.customerId;
 
@@ -15,7 +16,7 @@ export const useDocumentsStore = defineStore('document', () => {
 		})
 	}
 
-	const setNewFormData = (newData: Object) => {
+	const setNewFormData = (newData) => {
 		formData.value = newData;
 	}
 
