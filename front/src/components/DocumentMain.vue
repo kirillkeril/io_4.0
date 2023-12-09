@@ -37,7 +37,7 @@
 						<p>Аванс (₽)</p>
 						<div class="document-main__item-avans">
 							<div class="checkbox">
-								<input type="checkbox" id="avans" name="avans" :checked="form.avansMoney > 0" @change="changeData"/>
+								<input type="checkbox" id="avans" name="avans" :checked="form.Avans > 0" @change="changeData"/>
 								<label for="avans">
 									<InlineSvg svg="check" class="checkbox-check"/>
 								</label>
@@ -48,7 +48,7 @@
 								name="avans-money" 
 								placeholder="Размер аванса"
 								class="input" 
-								v-model="form.avansMoney"
+								v-model="form.Avans"
 								@change="changeData"
 							/>
 						</div>
@@ -68,7 +68,7 @@
 							name="number" 
 							placeholder="ПРМ-0845/1123"
 							class="input" 
-							v-model="form.number"
+							v-model="form.Number"
 							@change="changeData"
 						/>
 					</div>
@@ -86,7 +86,7 @@
 									name="before" 
 									placeholder="23.12.2023"
 									class="input"
-									v-model="form.dateStart" 
+									v-model="form.Period" 
 									@change="changeData"
 								/>
 							</div>
@@ -116,7 +116,7 @@
 						name="item-contract" 
 						placeholder="Провод монтажный витой Мезонин 2х1,5 мм в декоративной оплетке для отрытой проводки"
 						class="input"
-						v-model="form.itemContract" 
+						v-model="form.Predmet" 
 						@change="changeData"
 					></textarea>
 				</div>
@@ -131,7 +131,7 @@
 						name="place" 
 						placeholder="Пермь, пр. Мира, д. 1"
 						class="input" 
-						v-model="form.place" 
+						v-model="form.Mesto" 
 						@change="changeData"
 					>
 				</div>
@@ -146,7 +146,7 @@
 						name="code" 
 						placeholder="221230104092423010100101370018425244"
 						class="input" 
-						v-model="form.code" 
+						v-model="form.IKZ" 
 						@change="changeData"
 					>
 				</div>
@@ -162,7 +162,7 @@
 							name="financing" 
 							placeholder="«Смешанное» финансирование"
 							class="input" 
-							v-model="form.financing" 
+							v-model="form.Istochnik" 
 							@change="changeData"
 						>
 						<div class="checkbox">
@@ -193,14 +193,13 @@ import {useDocumentsStore} from '../stores/document';
 	const lastVersionData = useDocumentsStore();
 
 	const form = ref({
-		avansMoney: null,
-		number: null,
-		dateStart: null,
-		dateEnd: null,
-		itemContract: null,
-		place: null,
-		code: null,
-		financing: null
+		Avans: null,
+		Number: null,
+		Period: null,
+		Predmet: null,
+		Mesto: null,
+		IKZ: null,
+		Istochnik: null,
 	})
 
 	const changeData = () => {
@@ -208,17 +207,22 @@ import {useDocumentsStore} from '../stores/document';
 	};
 	onMounted(
 		() => {
-			form.value = {
-				Avans: lastVersionData.avans || formProps?.avansMoney,
-				Number: lastVersionData.number || formProps?.number,
-				Period: lastVersionData.perios || formProps?.dateStart,
-				Predmet: lastVersionData.predmet || formProps?.itemContract,
-				Mesto: lastVersionData.mesto || formProps?.place,
-				IKZ: lastVersionData.ikz || formProps?.code,
-				Istochnik: lastVersionData.istochnik || formProps?.financing
-			};
-
 			getLastVersion();
+
+			setTimeout(() => {
+				let data = JSON.parse(JSON.stringify(lastVersionData)).lastVersionData;
+				console.log(data);
+				form.value = {
+					Avans: data?.Avans,
+					Number: data?.Number,
+					Period: data?.Period,
+					Predmet: data?.Predmet,
+					Mesto: data?.Mesto,
+					IKZ: data?.IKZ,
+					Istochnik: data?.Istochnik
+				};
+			}, 1500);
+			
 		}
 	)
 </script>

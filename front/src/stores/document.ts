@@ -4,7 +4,7 @@ import axios from 'axios'
 
 export const useDocumentsStore = defineStore('document', () => {
 	const formData = ref({});
-	const lastVersionData = ref({});
+	const lastVersionData = ref();
 	
 	const sendNewVersion = () => {
 		let local = JSON.parse(localStorage.getItem('currentIdenty'));
@@ -27,7 +27,7 @@ export const useDocumentsStore = defineStore('document', () => {
 		const res = await axios.post('https://mg.vp-pspu.cf/back/show_specific_version', { _id: id });
 
 		lastVersionData.value = res.data;
-		console.log(res.data);
+		console.log();
 	}
 
 	const setNewFormData = (newData: Object) => {
