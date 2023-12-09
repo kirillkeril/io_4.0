@@ -27,8 +27,11 @@ const sendMessage = () => {
 <template>
   <section class="chat">
     <header class="chat_header">
-      <h1>Чат</h1>
-      <ButtonUI icon="document" blue-fill>Документация</ButtonUI>
+		<router-link to="/suppliers" class="chat_header-title">
+			<InlineSvg svg="arrow-left" />
+      		<h1>Чат</h1>
+		</router-link>
+      <ButtonUI icon="document" link="/suppliers/discussion/document" blue-fill>Документация</ButtonUI>
     </header>
     <main class="chat_main">
       <div class="chat_addressee">
@@ -61,7 +64,6 @@ const sendMessage = () => {
 
 <style lang="scss" scoped>
 @import '../assets/sass/colors';
-
 .addressee_data {
   display: flex;
   flex-direction: column;

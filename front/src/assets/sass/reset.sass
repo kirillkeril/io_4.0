@@ -18,6 +18,7 @@ html
 body
 	overflow-x: hidden
 	font-family: 'Inter'
+	background: #F6F8FF
 
 a
 	text-decoration: none
@@ -29,3 +30,53 @@ button
 
 ol, ul
 	list-style: none
+
+.checkbox
+	& input
+		display: none
+
+		&:checked ~
+			& label
+				background: #3366FF
+				border: 2px solid #3366FF
+
+				.checkbox-check
+					opacity: 1
+
+	& label
+		display: block
+		position: relative
+		border-radius: 2px
+		width: 18px
+		height: 18px
+		border: 2px solid #A1A6B4
+		transition: .3s all
+		cursor: pointer
+
+		&:hover
+			opacity: .5
+
+		& .checkbox-check
+			position: absolute
+			top: 50%
+			left: 50%
+			transform: translate(-50%, -50%) scale(.6)
+			z-index: 1
+			opacity: 0
+			transition: .3s opacity
+
+.input
+	width: 100%
+	padding: 8px 12px
+	background: #E7EEF7
+	border-radius: 10px
+	border: none
+	outline: none
+	line-height: 1.4
+
+	&::placeholder
+		color: #8892A7
+	
+	&::-webkit-inner-spin-button
+		-webkit-appearance: none
+		margin: 0

@@ -22,9 +22,9 @@
 			<p>04.01.2024</p>
 		</div>
 		<div class="discussion__item discussion__more">
-			<button>
+			<router-link to="/suppliers/discussion">
 				<IconUI svg="chat" class="chat"/>
-			</button>
+			</router-link>
 			<button>
 				<IconUI svg="dots"/>
 			</button>
