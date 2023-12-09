@@ -13,10 +13,7 @@
       <div class="changes_archive">
         <h2>Архив изменений</h2>
         <div class="for-review_items">
-          <ReviewItem :badges="[{text: 'От заказчика', color: '#3fe'}]" old/>
-          <ReviewItem :badges="[{text: 'От заказчика', color: '#3fe'}]" old/>
-          <ReviewItem :badges="[{text: 'От заказчика', color: '#3fe'}]" old/>
-          <ReviewItem :badges="[{text: 'От заказчика', color: '#3fe'}]" old/>
+          <ReviewItem v-for="c in changes" :key="c._id" :change="c" :badges="[{text: 'От заказчика', color: '#3fe'}]" old/>
         </div>
       </div>
     </main>
@@ -24,7 +21,35 @@
 </template>
 
 <script setup lang="ts">
+import axios from "axios";
+import { storeToRefs } from "pinia";
+import { onMounted, Ref, ref } from "vue";
 import ReviewItem from "../components/ReviewItem.vue";
+import { useDiscussionStore } from "../stores/discussion";
+// import { useUserStore } from "../stores/users";
+
+// const {user} = storeToRefs(useUserStore());
+const {currentDiscussion} = storeToRefs(useDiscussionStore());
+const {getCurrentDiscussion} = useDiscussionStore();
+
+const allChanges: Ref<any[]> = ref([]);
+const changes: Ref<any[]> = ref([]);
+
+const getChanges = async () => {
+  await getCurrentDiscussion();
+  const providerId =  currentDiscussion.value.providerId;
+  const customerId =  currentDiscussion.value.customerId;
+  const res = await axios.get(`https://mg.vp-pspu.cf/back/get_all_versions/?ProviderID=${providerId}&CustomerID=${customerId}`);
+  allChanges.value = res.data;
+  allChanges.value.forEach(async (c) => {
+    const res = await axios.get(`https://mg.vp-pspu.cf/back/get_difference?_id=${c._id}`);
+    changes.value.push(res.data);
+  });
+};
+
+onMounted(() => {
+  getChanges();
+});
 </script>
 
 <style scoped lang="sass">

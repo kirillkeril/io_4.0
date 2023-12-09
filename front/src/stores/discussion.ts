@@ -23,7 +23,11 @@ export const useDiscussionStore = defineStore('discussion', () => {
 		});
 
 		localStorage.setItem('currentIdenty', newData);
-	} 
+	}
 
-	return {allDiscussions, fetchAllDiscussions, setDiscussion, currentDiscussion }
+	const getCurrentDiscussion = async () => {
+		currentDiscussion.value = JSON.parse(localStorage.getItem('currentIdenty')) as Discussoin;
+	}
+
+	return {allDiscussions, fetchAllDiscussions, setDiscussion, currentDiscussion, getCurrentDiscussion }
 });

@@ -29,6 +29,7 @@ const {message} = defineProps<Props>();
 .message
   display: grid
   width: 516px
+  max-width: 516px
   text-align: left
   grid-template-areas: "avatar author" "avatar content" "avatar applications"
   grid-template-columns: 54px auto
@@ -46,6 +47,7 @@ const {message} = defineProps<Props>();
     font-size: 16px
     font-weight: 600
   &_content
+    word-break: break-all
     text-align: left
     color: $dark-blue
     font-family: Inter

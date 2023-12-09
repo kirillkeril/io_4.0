@@ -15,6 +15,13 @@ module.exports = {
     node: true,
     jest: true,
   },
+  "prettier/prettier": [
+    "error",
+    {
+      "endOfLine": "auto"
+    }
+  ],
+  endOfLine: "auto",
   ignorePatterns: ['.eslintrc.js'],
   rules: {
     '@typescript-eslint/interface-name-prefix': 'off',

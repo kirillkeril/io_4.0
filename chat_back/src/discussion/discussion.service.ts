@@ -12,6 +12,11 @@ export class DiscussionService {
   ) {}
 
   async create(createDiscussionDto: CreateDiscussionDto) {
+    const messagesId = `${createDiscussionDto.customerId}:${createDiscussionDto.providerId}`;
+    const candidate = this.discussionRepository.findOne(
+      (c) => c.messageId == messagesId
+    );
+    if (candidate) return candidate;
     const newDisc = await this.discussionRepository.create({
       ...createDiscussionDto,
     });
@@ -19,7 +24,7 @@ export class DiscussionService {
 
     newDisc.status = 'Ввод сведений';
     newDisc.type = '';
-    newDisc.messagesId = `${createDiscussionDto.customerId}:${createDiscussionDto.providerId}`;
+
     await newDisc.save();
     return newDisc;
   }

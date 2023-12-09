@@ -15,7 +15,12 @@
       <div class="review_main_before">
         <h3><span>Ранняя</span>версия</h3>
         <div class="review_main_changes">
-          <label for="name" class="review_main_field">
+          <label v-for="o in oldValues" :key="o.label" for="name" class="review_main_field">
+            <span>{{ o.label }}</span>
+            <textarea name="name"
+              :value="o.value" />
+          </label>
+          <!-- <label for="name" class="review_main_field">
             <span>Предмет контракта</span>
             <textarea name="name"
               placeholder="Провод монтажный витой Мезонин 2х1,5 мм в декоративной оплетке для отрытой проводки" />
@@ -23,13 +28,18 @@
           <label for="name" class="review_main_field">
             <span>Место заключения</span>
             <textarea name="name" placeholder="Очко динозавтра" />
-          </label>
+          </label> -->
         </div>
       </div>
       <div class="review_main_after">
         <h3><span>Измененная</span>версия</h3>
         <div class="review_main_changes">
-          <label for="name" class="review_main_field">
+          <label v-for="o in newValues" :key="o.label" for="name" class="review_main_field">
+            <span>{{ o.label }}</span>
+            <textarea name="name"
+              :value="o.value" />
+          </label>
+          <!-- <label for="name" class="review_main_field">
             <span>Предмет контракта</span>
             <textarea name="name"
               placeholder="Провод монтажный витой Мезонин 2х1,5 мм в декоративной оплетке для отрытой проводки" />
@@ -37,7 +47,7 @@
           <label for="name" class="review_main_field">
             <span>Место заключения</span>
             <textarea name="name" placeholder="Очко динозавтра" />
-          </label>
+          </label> -->
         </div>
       </div>
       <footer class="review_main_footer">
@@ -59,11 +69,24 @@ import { Ref, ref } from 'vue';
 
 interface Props {
   old?: boolean;
-  badges: { text: string, color: string }[]
+  badges: { text: string, color: string }[];
+  change?: any;
 }
 
 const isOpen: Ref<boolean> = ref(false);
-const { old, badges } = defineProps<Props>();
+const { old, badges, change } = defineProps<Props>();
+
+const oldValues: Ref<any[]> = ref([]);
+const newValues: Ref<any[]> = ref([]);
+console.log(change);
+
+Object.keys(change ?? {}).forEach((k) => {
+  if(change[k].old || change[k].new) {
+    console.log(k, change[k]);
+    oldValues.value.push({value: change[k].old, label: k})
+    newValues.value.push({value: change[k].new, label: k})
+  }
+});
 </script>
 
 <style lang="sass" scoped>
