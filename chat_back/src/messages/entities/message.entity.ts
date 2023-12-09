@@ -5,15 +5,15 @@ import { CreateMessageDto } from '../dto/create-message.dto';
 @Schema()
 export class Message {
   @Prop()
-  chat_id: string;
+  chatId: string;
   @Prop()
-  author_id: string;
+  authorId: string;
   @Prop()
   text: string;
 
   constructor(dto: CreateMessageDto) {
-    this.author_id = dto.author_id;
-    this.chat_id = dto.chat_id;
+    this.authorId = dto.authorId;
+    this.chatId = dto.chatId;
     this.text = dto.text;
   }
 }

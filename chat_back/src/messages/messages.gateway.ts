@@ -20,15 +20,15 @@ export class MessagesGateway {
   clients: Set<Socket> = new Set();
 
   @SubscribeMessage('newMessage')
-  async create(
-    @MessageBody() createMessageDto: CreateMessageDto,
-    @ConnectedSocket() client: Socket,
-  ) {
+  async create(@MessageBody() dto, @ConnectedSocket() client: Socket) {
     this.clients.add(client);
+    const createMessageDto: CreateMessageDto = JSON.parse(
+      dto,
+    ) as CreateMessageDto;
     const message = await this.messagesService.create(createMessageDto);
-    console.log(this.clients.size);
+    console.log('create', message, createMessageDto);
     this.clients.forEach((c) => {
-      c.emit('message', JSON.stringify(message));
+      c.emit('newMessageCreated', JSON.stringify(message));
     });
   }
 
@@ -36,11 +36,9 @@ export class MessagesGateway {
   async findAll(@ConnectedSocket() client: Socket) {
     this.clients.add(client);
     const messages = await this.messagesService.findAll();
-    console.log(messages);
-    this.clients.forEach((c) => {
-      messages.forEach((m) => {
-        c.emit('message', JSON.stringify(m));
-      });
+    console.log('find all', messages);
+    messages.forEach((m) => {
+      client.emit('allMessagesFinded', JSON.stringify(m));
     });
   }
 }
