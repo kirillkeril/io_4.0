@@ -5,8 +5,8 @@
 				<img src="../../assets/img/user.png" alt="user" />
 			</div>
 			<div class="discussion__hero-info">
-				<p>Даниил Мальцев</p>
-				<span>ООО “СТЕНД АП ПЭНИС”</span>
+				<p>{{user.fullname}}</p>
+				<span>{{user.companyName}}</span>
 			</div>
 		</div>
 		<div class="discussion__item discussion__decs">
@@ -32,10 +32,13 @@
 	</div>
 </template>
 
-<script>
-export default {
-	name: 'DiscussionUI'
+<script lang="ts" setup>
+import { User } from "../../types/user";
+
+interface Props {
+	user: User;
 }
+const {user} = defineProps<Props>();
 </script>
 
 <style lang="sass" scoped>

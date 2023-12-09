@@ -5,40 +5,32 @@
 				<p>Поставщик</p>
 			</div>
 			<div class="table__head-item">
-				<SelectUI 
-					placeholder="Предмет договора"
-					name="alphobet"
-					:inputs="[
-						{
-							id: 'i1',
-							value: 'От А до Я',
-						},
-						{
-							id: 'i2',
-							value: 'От Я до А',
-						}
-					]"
-				/>
+				<SelectUI placeholder="Предмет договора" name="alphobet" :inputs="[
+					{
+						id: 'i1',
+						value: 'От А до Я',
+					},
+					{
+						id: 'i2',
+						value: 'От Я до А',
+					}
+				]" />
 			</div>
 			<div class="table__head-item">
-				<SelectUI 
-					placeholder="Статус"
-					name="status"
-					:inputs="[
-						{
-							id: 's1',
-							value: 'Ввод сведений',
-						},
-						{
-							id: 's2',
-							value: 'Отказано',
-						},
-						{
-							id: 's3',
-							value: 'Подписано',
-						}
-					]"
-				/>
+				<SelectUI placeholder="Статус" name="status" :inputs="[
+					{
+						id: 's1',
+						value: 'Ввод сведений',
+					},
+					{
+						id: 's2',
+						value: 'Отказано',
+					},
+					{
+						id: 's3',
+						value: 'Подписано',
+					}
+				]" />
 			</div>
 			<div class="table__head-item">
 				<p>От</p>
@@ -48,23 +40,19 @@
 			</div>
 		</div>
 		<div class="table__list">
-			<DiscussionUI />
-			<DiscussionUI />
-			<DiscussionUI />
-			<DiscussionUI />
-			<DiscussionUI />
-			<DiscussionUI />
-			<DiscussionUI />
-			<DiscussionUI />
-			<DiscussionUI />
+			<DiscussionUI v-for="(p) in providers" :key="p.email" :user="p"/>
 		</div>
 	</div>
 </template>
 
-<script>
-export default {
-	name: 'DiscussionTable'
+<script lang="ts" setup>
+import { User } from "../types/user";
+import DiscussionUI from "./ui/DiscussionUI.vue";
+
+interface Props {
+	providers: User[]
 }
+const { providers } = defineProps<Props>();
 </script>
 
 <style lang="sass" scoped>

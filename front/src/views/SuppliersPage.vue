@@ -4,20 +4,31 @@
 			<h1>Обсуждение</h1>
 		</div>
 		<div class="suppliers__body">
-			<DiscussionTable />
+			<DiscussionTable :providers="providers"/>
 		</div>
 	</section>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
+import axios from 'axios'
 import DiscussionTable from '../components/DiscussionTable.vue'
+import { User } from '../types/user'
+import { computed, onMounted, Ref, ref } from 'vue'
 
-export default {
-	name: 'SuppliersPage',
-	components: {
-		DiscussionTable
-	}
+const users: Ref<User[]> = ref([]);
+
+const getSuppliers = async () => {
+	const res = await axios.get<User[]>('http://localhost:3001/api/users');
+	users.value = res.data.filter(u => u.role == 'provider');
+	console.log(users.value);
 }
+
+onMounted(() => {
+	getSuppliers().then(() => {
+		console.log('aaa');
+	});
+});
+const providers = computed(() => users.value);
 </script>
 
 <style lang="sass" scoped>
