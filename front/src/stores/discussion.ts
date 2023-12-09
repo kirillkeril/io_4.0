@@ -6,11 +6,17 @@ import { Discussoin } from '../types/discussion';
 export const useDiscussionStore = defineStore('discussion', () => {
 	const allDiscussions = ref(null);
 
+	const currentDiscussion: Ref<Discussoin | null> = ref(null);
+
 	const fetchAllDiscussions = async () => {
-		axios.get('https://mg.vp-pspu.cf/api/discussion').then((response) => {
+		axios.get('http://localhost:3001/api/discussion').then((response) => {
 			allDiscussions.value = response.data;
 		})
 	}
 
-	return {allDiscussions, fetchAllDiscussions}
+	const setDiscussion = async (disc: Discussoin) => {
+		currentDiscussion.value = disc;
+	} 
+
+	return {allDiscussions, fetchAllDiscussions, setDiscussion, currentDiscussion }
 });

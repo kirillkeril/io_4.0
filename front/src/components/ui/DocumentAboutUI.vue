@@ -69,7 +69,7 @@
 	</div>
 </template>
 
-<script>
+<script lang="ts">
 import InlineSvg from '../InlineSvg.vue';
 
 export default {
