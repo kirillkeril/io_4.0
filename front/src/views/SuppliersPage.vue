@@ -12,8 +12,6 @@
 </template>
 
 <script lang="ts" setup>
-import { useDiscussionStore } from '../stores/discussion'
-import { storeToRefs } from 'pinia'
 import axios from 'axios'
 import DiscussionTable from '../components/DiscussionTable.vue'
 import { User } from '../types/user'

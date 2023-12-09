@@ -40,7 +40,7 @@
 			</div>
 		</div>
 		<div class="table__list">
-			<DiscussionUI v-for="(p) in providers" :key="p.email" :user="p"/>
+			<DiscussionUI v-for="(p) in providers" :key="p.email" :provider="p"/>
 		</div>
 	</div>
 </template>

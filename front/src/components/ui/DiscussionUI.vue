@@ -5,8 +5,8 @@
 				<img src="../../assets/img/user.png" alt="user" />
 			</div>
 			<div class="discussion__hero-info">
-				<p>{{user.fullname}}</p>
-				<span>{{user.companyName}}</span>
+				<p>{{ provider.fullname }}</p>
+				<span>{{ provider.companyName }}</span>
 			</div>
 		</div>
 		<div class="discussion__item discussion__decs">
@@ -22,23 +22,37 @@
 			<p>04.01.2024</p>
 		</div>
 		<div class="discussion__item discussion__more">
-			<router-link to="/suppliers/discussion">
-				<IconUI svg="chat" class="chat"/>
-			</router-link>
+			<button-ui style="padding: 0" @click="() => startDiscussion()">
+				<IconUI svg="chat" class="chat" />
+			</button-ui>
 			<button>
-				<IconUI svg="dots"/>
+				<IconUI svg="dots" />
 			</button>
 		</div>
 	</div>
 </template>
 
 <script lang="ts" setup>
+import axios from "axios";
 import { User } from "../../types/user";
+import { Discussoin } from '../../types/discussion';
+import { useUserStore } from "../../stores/users";
+import { useRouter } from "vue-router";
 
 interface Props {
-	user: User;
+	provider: User;
 }
-const {user} = defineProps<Props>();
+const { provider } = defineProps<Props>();
+const { user } = useUserStore();
+const router = useRouter();
+
+const startDiscussion = async () => {
+	if (user == null) return;
+	const newDisck: Discussoin = { customerId: user!._id, privaderId: provider._id, startDate: Date.now().toLocaleString() };
+	const res = await axios.post<Discussoin>('http://localhost:3001/api/discussion', newDisck);
+	console.log(res.data);
+	router.push('/suppliers/discussion');	
+}
 </script>
 
 <style lang="sass" scoped>
