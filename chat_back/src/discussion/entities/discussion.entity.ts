@@ -5,7 +5,9 @@ import { HydratedDocument } from 'mongoose';
 @Schema()
 export class Discussion {
   @Prop()
-  privaderId: string;
+  messagesId: string;
+  @Prop()
+  providerId: string;
   @Prop()
   customerId: string;
   @Prop()

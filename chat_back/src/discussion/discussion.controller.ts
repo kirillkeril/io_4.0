@@ -8,7 +8,9 @@ export class DiscussionController {
 
   @Post()
   create(@Body() createDiscussionDto: CreateDiscussionDto) {
-    return this.discussionService.create(createDiscussionDto);
+    console.log(createDiscussionDto);
+
+    return this.discussionService.create({ ...createDiscussionDto });
   }
 
   @Get()

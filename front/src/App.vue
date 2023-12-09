@@ -3,16 +3,12 @@ import HeaderBlock from "./components/HeaderBlock.vue";
 import FooterBlock from "./components/FooterBlock.vue";
 import NavBar from "./components/NavBar.vue";
 import { useUserStore } from './stores/users';
-import { useMessagesStore } from "./stores/messages";
 import { socket } from "./socket";
 
-const { bindEvents } = useMessagesStore();
 const { getUser } = useUserStore();
 // remove any existing listeners (after a hot module replacement)
 socket.off();
-
-bindEvents();
-getUser('65740cec0b6595f685248363');
+getUser('6574396936f05d19e2d31f6a');
 </script>
 
 <template>

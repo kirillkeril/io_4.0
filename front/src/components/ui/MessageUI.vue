@@ -4,7 +4,7 @@
       <img v-if="!withoutIcon" src="" alt="">
     </div>
     <div class="message_content">
-      <span v-if="!headless" class="message_author">{{message.authorId}}</span>
+      <span v-if="!headless" class="message_author">{{message.authorName}}</span>
       <div class="message_content">
         {{ message.text }}
       </div>

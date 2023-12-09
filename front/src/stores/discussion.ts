@@ -1,15 +1,16 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
-import axios from 'axios'
+import { Ref, ref } from 'vue'
+import axios from 'axios';
+import { Discussoin } from '../types/discussion';
 
 export const useDiscussionStore = defineStore('discussion', () => {
-	const allDiscussion = ref(null);
+	const allDiscussions = ref(null);
 
 	const fetchAllDiscussions = async () => {
 		axios.get('https://mg.vp-pspu.cf/api/discussion').then((response) => {
-			allDiscussion.value = response.data;
+			allDiscussions.value = response.data;
 		})
 	}
 
-	return {allDiscussion, fetchAllDiscussions}
+	return {allDiscussions, fetchAllDiscussions}
 });

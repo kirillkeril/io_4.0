@@ -1,5 +1,5 @@
 export class CreateDiscussionDto {
-  privaderId: string;
+  providerId: string;
   customerId: string;
   status: string;
   type: string;

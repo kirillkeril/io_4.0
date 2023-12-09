@@ -15,6 +15,11 @@ export class DiscussionService {
     const newDisc = await this.discussionRepository.create({
       ...createDiscussionDto,
     });
+    console.log({ ...createDiscussionDto });
+
+    newDisc.status = 'Ввод сведений';
+    newDisc.type = '';
+    newDisc.messagesId = `${createDiscussionDto.customerId}:${createDiscussionDto.providerId}`;
     await newDisc.save();
     return newDisc;
   }

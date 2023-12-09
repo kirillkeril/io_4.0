@@ -16,28 +16,34 @@ import { json } from 'stream/consumers';
   },
 })
 export class MessagesGateway {
-  constructor(private readonly messagesService: MessagesService) { }
+  constructor(private readonly messagesService: MessagesService) {}
   clients: Set<Socket> = new Set();
 
   @SubscribeMessage('newMessage')
-  async create(@MessageBody() dto, @ConnectedSocket() client: Socket) {
-    this.clients.add(client);
+  async create(@MessageBody() inputMsg, @ConnectedSocket() client: Socket) {
+    console.log('msg', inputMsg);
+
     const createMessageDto: CreateMessageDto = JSON.parse(
-      dto,
+      inputMsg,
     ) as CreateMessageDto;
     const message = await this.messagesService.create(createMessageDto);
-    console.log('create', message, createMessageDto);
+    const ids = createMessageDto.messageId.split(':');
     this.clients.forEach((c) => {
       c.emit('newMessageCreated', JSON.stringify(message));
     });
   }
 
   @SubscribeMessage('findAllMessages')
-  async findAll(@ConnectedSocket() client: Socket) {
+  async findAll(@ConnectedSocket() client: Socket, @MessageBody() msg) {
+    console.log('a', msg);
+
     this.clients.add(client);
     const messages = await this.messagesService.findAll();
-    console.log('find all', messages);
-    messages.forEach((m) => {
+    const filteredMessages = messages.filter((m) => {
+      return m.messageId == `${msg.customerId}:${msg.providerId}`;
+    });
+    console.log(filteredMessages.length);
+    filteredMessages.forEach((m) => {
       client.emit('allMessagesFinded', JSON.stringify(m));
     });
   }
