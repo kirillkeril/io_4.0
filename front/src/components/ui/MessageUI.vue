@@ -48,7 +48,4 @@
     font-style: normal
     font-weight: 400
     line-height: 20px
-  &_applications
-
-
 </style>

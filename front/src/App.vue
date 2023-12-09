@@ -3,11 +3,11 @@ import HeaderBlock from "./components/HeaderBlock.vue";
 import FooterBlock from "./components/FooterBlock.vue";
 import NavBar from "./components/NavBar.vue";
 
-import { useItemStore } from "./stores/messages";
+import { useMessagesStore } from "./stores/messages";
 import { useConnectionStore } from "./stores/connection";
 import { socket } from "./socket";
 
-const itemStore = useItemStore();
+const itemStore = useMessagesStore();
 const connectionStore = useConnectionStore();
 
 // remove any existing listeners (after a hot module replacement)

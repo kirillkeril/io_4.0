@@ -6,7 +6,7 @@ import { onMounted, Ref, ref } from 'vue';
 import { useMessagesStore } from '../stores/messages';
 import type { Message } from '../types/message';
 
-const { bindEvents, createMessage, items } = useMessagesStore();
+const { bindEvents, createMessage } = useMessagesStore();
 const userId = `user:${Date.now()}`;
 const messageInput: Ref<string> = ref('');
 
@@ -16,10 +16,12 @@ onMounted(() => {
 
 const sendMessage = () => {
   const message: Message = {
-    authorId = '',
+    authorId: userId,
     text: messageInput.value
   }
-  if(message.)
+  console.log(message);
+  
+  if(!message.text) return;
   createMessage(message);
 }
 </script>
@@ -56,7 +58,7 @@ const sendMessage = () => {
       <form class="form">
         <div class="form_input">
           <InlineSvg svg="clip" />
-          <input />
+          <input v-model="messageInput"/>
           <InlineSvg svg="send" @click="() => sendMessage()"/>
         </div>
       </form>

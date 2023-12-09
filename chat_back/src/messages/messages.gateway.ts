@@ -38,7 +38,9 @@ export class MessagesGateway {
     const messages = await this.messagesService.findAll();
     console.log(messages);
     this.clients.forEach((c) => {
-      c.emit('message', JSON.stringify(messages));
+      messages.forEach((m) => {
+        c.emit('message', JSON.stringify(m));
+      });
     });
   }
 }
