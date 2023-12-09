@@ -37,7 +37,7 @@
 						<p>Аванс (₽)</p>
 						<div class="document-main__item-avans">
 							<div class="checkbox">
-								<input type="checkbox" id="avans" name="avans" v-model="form.avans" @change="changeData"/>
+								<input type="checkbox" id="avans" name="avans" :checked="form.avansMoney > 0" @change="changeData"/>
 								<label for="avans">
 									<InlineSvg svg="check" class="checkbox-check"/>
 								</label>

@@ -8,6 +8,7 @@ export const useDocumentsStore = defineStore('document', () => {
 	
 	const sendNewVersion = () => {
 		let local = JSON.parse(localStorage.getItem('currentIdenty'));
+		
 		formData.value.ProviderID = local.providerId;
 		formData.value.CustomerID = local.customerId;
 
@@ -16,6 +17,7 @@ export const useDocumentsStore = defineStore('document', () => {
 		})
 	}
 
+<<<<<<< HEAD:front/src/stores/document.ts
 	const getLastVersion = async () => {
 		let local = JSON.parse(localStorage.getItem('currentIdenty'));
 
@@ -30,6 +32,9 @@ export const useDocumentsStore = defineStore('document', () => {
 	}
 
 	const setNewFormData = (newData: Object) => {
+=======
+	const setNewFormData = (newData) => {
+>>>>>>> c68c0b00e1080e48e03467d83d06e398974090d1:front/src/stores/document.js
 		formData.value = newData;
 	}
 

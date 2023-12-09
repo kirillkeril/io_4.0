@@ -34,7 +34,7 @@
 	</div>
 </template>
 
-<script lang="ts">
+<script lang="js">
 export default {
 	name: 'NavBar',
 
@@ -51,7 +51,7 @@ export default {
 	},
 
 	watch: {
-		$route(to, from) {
+		$route(to) {
 			this.actualPath = to.path.split('/')[1];
 		}
 	}
