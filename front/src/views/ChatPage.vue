@@ -46,7 +46,7 @@ const sendMessage = () => {
         <div v-for="(msg, idx) in messages" :key="msg._id"
           :class="msg.authorId == userId ? 'messages_internal' : 'messages_external'">
           <MessageUI :message="msg" :headless="messages[idx - 1]?.authorId === msg.authorId"
-            :without-icon="messages[idx + 1]?.authorId == msg.authorId" />
+            :without-icon="messages[idx - 1]?.authorId == msg.authorId" />
         </div>
       </div>
 
