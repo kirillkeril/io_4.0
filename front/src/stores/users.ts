@@ -8,8 +8,7 @@ export const useUserStore = defineStore('users', () => {
 
 	const getUser = async (id: string) => {
 		try {
-			const res = await axios.get<User>(`http://localhost:3001/api/users/${id}`);
-			console.log(res.data);
+			const res = await axios.get<User>(`https://mg.vp-pspu.cf/api/users/${id}`);
 			user.value = res.data;
 		} catch(e) {
 			console.log(e);			

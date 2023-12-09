@@ -37,7 +37,7 @@
 						<p>Аванс (₽)</p>
 						<div class="document-main__item-avans">
 							<div class="checkbox">
-								<input type="checkbox" id="avans" name="avans" />
+								<input type="checkbox" id="avans" name="avans" v-model="form.avans" />
 								<label for="avans">
 									<InlineSvg svg="check" class="checkbox-check"/>
 								</label>
@@ -48,6 +48,7 @@
 								name="avans-money" 
 								placeholder="Размер аванса"
 								class="input" 
+								v-model="form.avansMoney"
 							/>
 						</div>
 					</div>
@@ -66,6 +67,7 @@
 							name="number" 
 							placeholder="ПРМ-0845/1123"
 							class="input" 
+							v-model="form.number"
 						/>
 					</div>
 					<div class="document-main__item">
@@ -81,7 +83,8 @@
 									id="before" 
 									name="before" 
 									placeholder="23.12.2023"
-									class="input" 
+									class="input"
+									v-model="form.dateStart" 
 								/>
 							</div>
 							<div>
@@ -92,6 +95,7 @@
 									name="after" 
 									placeholder="23.12.2023"
 									class="input" 
+									v-model="form.dateEnd" 
 								/>
 							</div>
 						</div>
@@ -107,7 +111,8 @@
 						id="item-contract" 
 						name="item-contract" 
 						placeholder="Провод монтажный витой Мезонин 2х1,5 мм в декоративной оплетке для отрытой проводки"
-						class="input" 
+						class="input"
+						v-model="form.itemContract" 
 					></textarea>
 				</div>
 				<div class="document-main__item">
@@ -121,6 +126,7 @@
 						name="place" 
 						placeholder="Пермь, пр. Мира, д. 1"
 						class="input" 
+						v-model="form.place" 
 					>
 				</div>
 				<div class="document-main__item">
@@ -134,6 +140,7 @@
 						name="code" 
 						placeholder="221230104092423010100101370018425244"
 						class="input" 
+						v-model="form.code" 
 					>
 				</div>
 				<div class="document-main__item">
@@ -144,13 +151,14 @@
 					<div class="document-main__item-nds">
 						<input 
 							type="text" 
-							id="code" 
-							name="code" 
+							id="financing" 
+							name="financing" 
 							placeholder="«Смешанное» финансирование"
 							class="input" 
+							v-model="form.financing" 
 						>
 						<div class="checkbox">
-							<input type="checkbox" id="nds" name="nds" />
+							<input type="checkbox" id="nds" name="nds" v-model="form.nds"/>
 							<label for="nds">
 								<InlineSvg svg="check" class="checkbox-check"/>
 							</label>
@@ -168,6 +176,42 @@ import InlineSvg from '../components/InlineSvg.vue';
 
 export default {
 	name: 'DocumentMain',
+	props: {
+		formProps: {
+			type: Object,
+			default: {}
+		}
+	},
+	data() {
+		return {
+			form: {
+				avans: null,
+				avansMoney: null,
+				number: null,
+				dateStart: null,
+				dateEnd: null,
+				itemContract: null,
+				place: null,
+				code: null,
+				financing: null,
+				nds: null
+			}
+		}
+	},
+	mounted() {
+		this.form = {
+			avans: this.formProps.avans,
+			avansMoney: this.formProps.avansMoney,
+			number: this.formProps.number,
+			dateStart: this.formProps.dateStart,
+			dateEnd: this.formProps.dateEnd,
+			itemContract: this.formProps.itemContract,
+			place: this.formProps.place,
+			code: this.formProps.code,
+			financing: this.formProps.financing,
+			nds: this.formProps.nds
+		}
+	},
 	components: {
 		InlineSvg
 	}

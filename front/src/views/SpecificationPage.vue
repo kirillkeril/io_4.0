@@ -1,10 +1,13 @@
 <template>
 	<div class="specification">
 		<div class="specification__title">
-			<InlineSvg svg="arrow-left"/>
-			<router-link to="/suppliers/discussion/document">
-				<h1>Документация</h1>
-			</router-link>
+			<div class="specification__title-backe">
+				<InlineSvg svg="arrow-left"/>
+				<router-link to="/suppliers/discussion/document">
+					<h1>Документация</h1>
+				</router-link>
+			</div>
+			<ButtonUI blueFill>Отправить на рассмотрение</ButtonUI>
 		</div>
 		<div class="specification__body">
 			<div class="specification__body-title">
@@ -46,6 +49,11 @@ export default {
 	width: 100%
 
 	&__title
+		display: flex
+		align-items: center
+		justify-content: space-between
+
+	&__title-backe
 		display: flex
 		align-items: center
 		grid-gap: 12px

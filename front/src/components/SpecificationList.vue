@@ -1,7 +1,14 @@
 <template>
-	<div class="specification-list specification-list--empty">
-		<p class="specification-list__empty">Пока что здесь пусто...</p>
-		<button class="specification-list__add">
+	<div class="specification-list">
+		<!-- <p class="specification-list__empty">Пока что здесь пусто...</p> -->
+		<div class="specification-list__inner">
+			<SpecificationItem 
+				v-for="specification in specificationList" 
+				:key="specification.id"
+				:formProps="specification"
+			/>
+		</div>
+		<button class="specification-list__add" @click="addNewSpecification">
 			<InlineSvg svg="plus" />
 			<span>Добавить позицию</span>
 		</button>
@@ -15,6 +22,34 @@ export default {
 	name: 'SpecificationList',
 	components: {
 		InlineSvg
+	},
+	data() {
+		return {
+			specificationList: [
+				{
+					id: 1232,
+					name: '',
+					okpd: '',
+					price: 0,
+					size: 0,
+					nds: 5,
+					summ: 0,
+				},
+			]
+		}
+	},
+	methods: {
+		addNewSpecification() {
+			this.specificationList.push({
+				id: 1232,
+				name: '',
+				okpd: '',
+				price: 0,
+				size: 0,
+				nds: 5,
+				summ: 0,
+			})
+		}
 	}
 }
 </script>
@@ -24,11 +59,11 @@ export default {
 .specification-list
 	display: flex
 	flex-direction: column
+	align-items: center
 	height: 100%
 
 	&--empty
 		justify-content: center
-		align-items: center
 
 	&__add
 		display: flex
@@ -54,4 +89,10 @@ export default {
 	&__empty
 		font-size: 18px
 		color: $grey
+
+	&__inner
+		width: 100%
+		display: flex
+		flex-direction: column
+		grid-gap: 24px
 </style>

@@ -3,11 +3,13 @@ import IconUI from './IconUI.vue'
 import DiscussionUI from './DiscussionUI.vue'
 import SelectUI from './SelectUI.vue'
 import DocumentAboutUI from './DocumentAboutUI.vue'
+import SpecificationItem from './SpecificationItem.vue'
 
 export default [
     ButtonUI,
 	IconUI,
 	DiscussionUI,
 	SelectUI,
-	DocumentAboutUI
+	DocumentAboutUI,
+	SpecificationItem
 ]

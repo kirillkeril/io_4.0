@@ -3,36 +3,43 @@
 		<div class="suppliers__title">
 			<h1>Обсуждение</h1>
 		</div>
-		{{ fetchAllDiscussions }}
 		<div class="suppliers__body">
-			<DiscussionTable :providers="providers"/>
+			<DiscussionTable v-if="providers" :providers="providers"/>
 		</div>
 		
 	</section>
 </template>
 
 <script lang="ts" setup>
-import { useDiscussionStore } from '../stores/discussion'
 import { storeToRefs } from 'pinia'
-import axios from 'axios'
+
+import { useProvidersStore } from '../stores/providers'
+import { useDiscussionStore } from '../stores/discussion'
+
 import DiscussionTable from '../components/DiscussionTable.vue'
+
 import { User } from '../types/user'
+import { Document } from '../types/document'
+
 import { computed, onMounted, Ref, ref } from 'vue'
 
 const users: Ref<User[]> = ref([]);
+const discussion: Ref<Document[]> = ref([]);
 
-const getSuppliers = async () => {
-	const res = await axios.get<User[]>('http://localhost:3001/api/users');
-	users.value = res.data.filter(u => u.role == 'provider');
-	console.log(users.value);
-}
+const { fetchAllProviders } = useProvidersStore();
+const { fetchAllDiscussions } = useDiscussionStore();
+
+const { allProviders } = storeToRefs(useProvidersStore());
+const { allDiscussion } = storeToRefs(useDiscussionStore());
 
 onMounted(() => {
-	getSuppliers().then(() => {
-		console.log('aaa');
-	});
+	fetchAllProviders();
+	fetchAllDiscussions();
 });
-const providers = computed(() => users.value);
+
+const providers = computed(() => {
+	return allProviders.value?.filter(item => item.role === 'provider');
+});
 </script>
 
 <style lang="sass" scoped>

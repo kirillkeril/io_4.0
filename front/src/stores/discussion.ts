@@ -3,13 +3,13 @@ import { ref } from 'vue'
 import axios from 'axios'
 
 export const useDiscussionStore = defineStore('discussion', () => {
-	const allDiscussions = ref(null);
+	const allDiscussion = ref(null);
 
 	const fetchAllDiscussions = async () => {
-		axios.get('https://ai.vp-pspu.cf/api/users').then((response) => {
-			console.log(response);
+		axios.get('https://mg.vp-pspu.cf/api/discussion').then((response) => {
+			allDiscussion.value = response.data;
 		})
 	}
 
-	return {allDiscussions, fetchAllDiscussions}
+	return {allDiscussion, fetchAllDiscussions}
 });
