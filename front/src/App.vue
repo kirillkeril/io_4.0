@@ -2,30 +2,25 @@
 import HeaderBlock from "./components/HeaderBlock.vue";
 import FooterBlock from "./components/FooterBlock.vue";
 import NavBar from "./components/NavBar.vue";
-
 import { useMessagesStore } from "./stores/messages";
-import { useConnectionStore } from "./stores/connection";
 import { socket } from "./socket";
 
-const itemStore = useMessagesStore();
-const connectionStore = useConnectionStore();
-
+const { bindEvents } = useMessagesStore();
 // remove any existing listeners (after a hot module replacement)
 socket.off();
 
-itemStore.bindEvents();
-connectionStore.bindEvents();
+bindEvents();
 </script>
 
 <template>
-  <div class="app">
-	<HeaderBlock />
-	<main>
-		<NavBar />
-		<router-view></router-view>
-	</main>
-	<FooterBlock />
-  </div>  
+	<div class="app">
+		<HeaderBlock />
+		<main>
+			<NavBar />
+			<router-view></router-view>
+		</main>
+		<FooterBlock />
+	</div>
 </template>
 
 <style scoped lang="sass">

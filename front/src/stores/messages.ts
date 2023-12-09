@@ -5,22 +5,36 @@ import { Message } from "../types/message";
 
 export const useMessagesStore = defineStore("item", () => {
 	const messages: Ref<Message[]> = ref([]);
+	const connected: Ref<boolean> = ref(false);
+
 
 	const bindEvents = () => {
-		// sync the list of items upon connection
+		if (!socket.connected) {
+			socket.connect();
+			connected.value = socket.connected;
+		}
 		socket.on("connect", () => {
 			socket.emit("findAllMessages");
+			connected.value = true;
 		});
-		socket.on('message', (res) => {
-			console.log(res);			
+		socket.on("disconnect", () => {
+			connected.value = false;
+			console.log('disconnect');
+		});
+		socket.on('newMessageCreated', (res) => {
+			const message: Message = JSON.parse(res) as Message;
+			const a = messages.value.push(message);
+			console.log(a);			
+		});
+		socket.on('allMessagesFinded', (res) => {
+			const message: Message = JSON.parse(res) as Message;
+			messages.value.push(message);
 		});
 	}
 
 	const createMessage = (message: Message) => {
-		console.log('create message');
-		
 		socket.emit("newMessage", JSON.stringify(message));
 	}
 
-	return { messages, bindEvents, createMessage }
+	return { messages, bindEvents, createMessage, connected }
 });

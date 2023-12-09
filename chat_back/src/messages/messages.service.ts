@@ -8,7 +8,7 @@ import { Model } from 'mongoose';
 export class MessagesService {
   constructor(
     @InjectModel(Message.name) private messagesRepo: Model<Message>,
-  ) {}
+  ) { }
 
   async create(createMessageDto: CreateMessageDto) {
     const newMessage = await this.messagesRepo.create({ ...createMessageDto });

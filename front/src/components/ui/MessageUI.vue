@@ -1,47 +1,52 @@
 <template>
   <div class="message">
     <div class="message_avatar">
-      <img src="" alt="">
+      <img v-if="!withoutIcon" src="" alt="">
     </div>
     <div class="message_content">
-      <span class="message_author">Даниил Мальцев</span>
+      <span v-if="!headless" class="message_author">{{message.authorId}}</span>
       <div class="message_content">
-        Приветствую, хотел бы уточнить некоторую информацию по документу в неформальном стиле.
-        Удобно ли будет созвониться завтра, допустим, часов в 12?
+        {{ message.text }}
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { Message } from '../../types/message';
 
+interface Props {
+  headless?: boolean;
+  withoutIcon?: boolean;
+  message: Message;
+}
+
+const {message} = defineProps<Props>();
 </script>
 
 <style scoped lang="sass">
 @import '../../assets/sass/colors'
 .message
   display: grid
-  max-width: 516px
-  min-width: 150px
+  width: 516px
+  text-align: left
   grid-template-areas: "avatar author" "avatar content" "avatar applications"
+  grid-template-columns: 54px auto
   gap: 12px
   &_avatar
-    width: 52px
-    height: 52px
-    border-radius: 9999px
-    border: none
-    background: $grey
     grid-area: avatar
-    img 
-      border-radius: 9999px
+    img
+      background: $grey
       border: none
-      width: 100%
-      height: 100%
+      width: 52px
+      height: 52px
+      border-radius: 9999px
   &_author
     font-family: $dark-blue
     font-size: 16px
     font-weight: 600
   &_content
+    text-align: left
     color: $dark-blue
     font-family: Inter
     font-size: 14px
