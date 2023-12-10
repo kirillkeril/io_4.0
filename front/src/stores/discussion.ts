@@ -17,7 +17,7 @@ export const useDiscussionStore = defineStore('discussion', () => {
 	const _currentDiscussion: Ref<Discussoin | null> = ref(null);
 
 	const fetchAllDiscussions = () => {
-		axios.get('https://mg.vp-pspu.cf/api/discussion').then((response) => {
+		axios.get('http://localhost:3001/api/discussion').then((response) => {
 			allDiscussions.value = response.data;
 		})
 	}
@@ -27,10 +27,7 @@ export const useDiscussionStore = defineStore('discussion', () => {
 
 		console.log(disc);
 
-		let newData = JSON.stringify({
-			providerId: disc?.providerId,
-			customerId: disc?.customerId
-		});
+		let newData = JSON.stringify({...disc});
 
 		localStorage.setItem('currentIdenty', newData);
 	}
@@ -56,7 +53,7 @@ export const useDiscussionStore = defineStore('discussion', () => {
 		if (userStore.user.role == 'provider')
 			newDisck.value = { customerId: addresseeId, providerId: userStore.user!._id, startDate: Date.now().toLocaleString() };
 		console.log(newDisck);
-		const res = await axios.post<Discussoin>('https://mg.vp-pspu.cf/api/discussion', newDisck.value);
+		const res = await axios.post<Discussoin>('http://localhost:3001/api/discussion', newDisck.value);
 		console.log(res);		
 		setDiscussion(res.data);
 		setCurrentAddressee(addresseeId);
