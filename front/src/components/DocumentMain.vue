@@ -37,20 +37,13 @@
 						<p>Аванс (₽)</p>
 						<div class="document-main__item-avans">
 							<div class="checkbox">
-								<input type="checkbox" id="avans" name="avans" :checked="form.Avans > 0" @change="changeData"/>
+								<input type="checkbox" id="avans" name="avans" :checked="form.Avans > 0" @change="changeData" />
 								<label for="avans">
-									<InlineSvg svg="check" class="checkbox-check"/>
+									<InlineSvg svg="check" class="checkbox-check" />
 								</label>
 							</div>
-							<input 
-								type="number" 
-								id="avans-money" 
-								name="avans-money" 
-								placeholder="Размер аванса"
-								class="input" 
-								v-model="form.Avans"
-								@change="changeData"
-							/>
+							<input type="number" id="avans-money" name="avans-money" placeholder="Размер аванса" class="input"
+								v-model="form.Avans" @change="changeData" />
 						</div>
 					</div>
 				</div>
@@ -112,10 +105,7 @@
 						<InlineSvg svg="change" />
 					</button>
 					<p>Предмет контракта*</p>
-					<textarea 
-						type="text" 
-						id="item-contract" 
-						name="item-contract" 
+					<textarea type="text" id="item-contract" name="item-contract"
 						placeholder="Провод монтажный витой Мезонин 2х1,5 мм в декоративной оплетке для отрытой проводки"
 						class="input"
 						v-model="form.Predmet" 
@@ -131,15 +121,12 @@
 					<input 
 						type="text" 
 						id="place" 
-						name="place" 
 						placeholder="Пермь, пр. Мира, д. 1"
 						class="input" 
 						v-model="form.Mesto" 
 						@change="changeData"
 						required
 					>
-				</div>
-				<div class="document-main__item">
 					<button class="document-main__item-change">
 						<InlineSvg svg="change" />
 					</button>
@@ -174,7 +161,7 @@
 						<div class="checkbox">
 							<input type="checkbox" id="nds" name="nds" v-model="form.nds" @change="changeData" required/>
 							<label for="nds">
-								<InlineSvg svg="check" class="checkbox-check"/>
+								<InlineSvg svg="check" class="checkbox-check" />
 							</label>
 							<p>НДС не облагается</p>
 						</div>

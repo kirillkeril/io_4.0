@@ -17,34 +17,24 @@ export const useDocumentsStore = defineStore('document', () => {
 	
 	const sendNewVersion = (resetData) => {
 		let local = JSON.parse(localStorage.getItem('currentIdenty'));
-
+		console.log(formData.value);
+		/* @ts-ignore */
 		formData.value.ProviderID = local.providerId;
+		/* @ts-ignore */
 		formData.value.CustomerID = local.customerId;
-
-		if (!resetData)
-			axios.post('https://mg.vp-pspu.cf/back/compare-json', formData.value).then((response) => {
-				console.log(response);
-			})
-		else {
-			let newData = {};
-
-			Object.keys(resetData ?? {}).forEach((item) => {
-				if (resetData[item].new && item !== '_id') {
-					newData[item] = resetData[item].new;
-				}
-			});
-
-			axios.post('https://mg.vp-pspu.cf/back/compare-json', newData).then((response) => {
-				console.log(response);
-			})
-		}
+		console.log(formData.value);
+		axios.post('https://mg.vp-pspu.cf/back/compare-json', formData.value).then((response) => {
+			console.log(response);
+		})
 	}
 
 	const getLastVersion = async () => {
 		let local = JSON.parse(localStorage.getItem('currentIdenty'));
 
 		let id = await axios.get(`https://mg.vp-pspu.cf/back/get_all_versions/?ProviderID=${local.providerId}&CustomerID=${local.customerId}`)
-	
+
+		console.log(id);
+
 		id = id.data[id.data.length - 1]._id;
 
 		const res = await axios.post('https://mg.vp-pspu.cf/back/show_specific_version', { _id: id });

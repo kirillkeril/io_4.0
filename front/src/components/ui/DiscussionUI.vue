@@ -22,7 +22,7 @@
 			<p>04.01.2024</p>
 		</div>
 		<div class="discussion__item discussion__more">
-			<ButtonUI style="padding: 0" @click="() => startDiscussion()">
+			<ButtonUI style="padding: 0" @click="() => startDiscussion(provider._id)">
 				<IconUI svg="chat" class="chat" />
 			</ButtonUI>
 			<button>
@@ -33,32 +33,14 @@
 </template>
 
 <script lang="ts" setup>
-import axios from "axios";
 import { User } from "../../types/user";
-import { Discussoin } from '../../types/discussion';
-import { useUserStore } from "../../stores/users";
-import { useRouter } from "vue-router";
 import { useDiscussionStore } from "../../stores/discussion";
 
 interface Props {
 	provider: User;
 }
 const { provider } = defineProps<Props>();
-const { user } = useUserStore();
-const { setDiscussion } = useDiscussionStore();
-const router = useRouter();
-
-const startDiscussion = async () => {
-	if (user == null) return;
-	else {
-		console.log('adsadsa');
-		
-	}
-	const newDisck: Discussoin = { customerId: user!._id, providerId: provider._id, startDate: Date.now().toLocaleString() };
-	const res = await axios.post<Discussoin>('https://mg.vp-pspu.cf/api/discussion', newDisck);
-	setDiscussion(res.data);
-	router.push('/suppliers/discussion');
-}
+const { startDiscussion } = useDiscussionStore();
 </script>
 
 <style lang="sass" scoped>

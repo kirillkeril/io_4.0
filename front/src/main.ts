@@ -31,8 +31,9 @@ const router = createRouter({
 		{ path: '/suppliers', component: SuppliersPage },
 		{ path: '/suppliers/discussion/document/changes', component: ChangesPage },
 		{
-			path: '/suppliers/discussion',
+			path: '/suppliers/discussion/:id',
 			component: DiscussionPage,
+			props: true,
 		},
 		{
 			path: '/suppliers/discussion/document',

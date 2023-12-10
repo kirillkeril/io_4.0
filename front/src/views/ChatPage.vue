@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import ButtonUI from '../components/ui/ButtonUI.vue';
+/* @ts-ignore */
 import MessageUI from '../components/ui/MessageUI.vue';
+/* @ts-ignore */
 import InlineSvg from '../components/InlineSvg.vue';
 import { onMounted, Ref, ref } from 'vue';
 import { useMessagesStore } from '../stores/messages';
@@ -9,28 +11,23 @@ import { storeToRefs } from 'pinia';
 import { useDiscussionStore } from '../stores/discussion';
 import { useUserStore } from '../stores/users';
 import { useRouter } from 'vue-router';
-import { User } from '../types/user';
+import axios from 'axios';
 
 const messagesStore = useMessagesStore();
 const { messages } = storeToRefs(messagesStore);
-const { user, getUserById } = useUserStore();
+const { user, getUser } = useUserStore();
 const messageInput: Ref<string> = ref('');
-const { currentDiscussion } = storeToRefs(useDiscussionStore());
+const { currentDiscussion, addressee } = storeToRefs(useDiscussionStore());
+const discussionStore = useDiscussionStore();
+/* @ts-ignore */
+const { getCurrentDiscussion } = useDiscussionStore();
 const router = useRouter();
 
-const addressee: Ref<User | null> = ref(null);
-
-const sendMessage = () => {
-  if (!currentDiscussion.value) return;
-  if (!user) {
-    router.push('/');
-    return;
-  };
-
+const sendMessage = async () => {
   const message: Message = {
-    messageId: `${currentDiscussion.value?.customerId}:${currentDiscussion.value?.providerId}`,
-    authorId: user!._id,
-    authorName: user!.fullname,
+    messageId: `${currentDiscussion.value.customerId}:${currentDiscussion.value.providerId}`,
+    authorId: user._id,
+    authorName: user.fullname,
     text: messageInput.value
   }
   if (!message.text) return;
@@ -38,17 +35,27 @@ const sendMessage = () => {
   messageInput.value = '';
 }
 
-const getAddressee = async() => {
-  if(!currentDiscussion.value) return;
-  if(user!.role == 'customer')
-    addressee.value = await getUserById(currentDiscussion.value!.providerId);
-  if(user!.role == 'provider')
-    addressee.value = await getUserById(currentDiscussion.value!.customerId);
+const file = ref('');
+
+const sendFile = async () => {
+  const formdata = new FormData();
+  formdata.append("file", file.value);
+  const res = await axios.post('https://mg.vp-pspu.cf/', formdata, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  });
+  console.log(res.data);
 }
 
-onMounted(() => {
+
+onMounted(async () => {
   messagesStore.bindEvents();
-  getAddressee();
+  if(!user) await getUser();
+  console.log(router.currentRoute.value.params.id);
+  
+  const id = router.currentRoute.value.params.id || discussionStore.getCurrentAddressee();
+  await discussionStore.startDiscussion(`${id}`);
 });
 </script>
 
@@ -80,7 +87,10 @@ onMounted(() => {
 
       <form class="form" @submit.prevent="() => sendMessage()">
         <div class="form_input">
-          <InlineSvg svg="clip" />
+          <label class="file-upload-container">
+            <InlineSvg svg="clip" />
+            <input @change.prevent="sendFile" ref="file" accept=".docx, .doc, .pdf, .xlsx," class="file-upload" type="file" icon="clip" style="padding: 0">
+          </label>
           <input v-model="messageInput" />
           <ButtonUI icon="send" style="padding: 0" type="subimit"></ButtonUI>
         </div>
@@ -125,6 +135,7 @@ onMounted(() => {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
     &-title {
       display: flex;
       align-items: center;
@@ -196,6 +207,10 @@ onMounted(() => {
   justify-content: center;
   align-items: center;
   width: 100%;
+
+  .file-upload {
+    display: none;
+  }
 
   &_input {
     border-radius: 10px;

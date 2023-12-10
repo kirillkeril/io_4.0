@@ -13,9 +13,7 @@ export class DiscussionService {
 
   async create(createDiscussionDto: CreateDiscussionDto) {
     const messagesId = `${createDiscussionDto.customerId}:${createDiscussionDto.providerId}`;
-    const candidate = this.discussionRepository.findOne(
-      (c) => c.messageId == messagesId
-    );
+    const candidate = this.discussionRepository.findOne({messagesId: messagesId});
     if (candidate) return candidate;
     const newDisc = await this.discussionRepository.create({
       ...createDiscussionDto,
