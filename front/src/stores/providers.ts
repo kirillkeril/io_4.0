@@ -6,7 +6,7 @@ export const useProvidersStore = defineStore('providers', () => {
 	const allProviders = ref(null);
 
 	const fetchAllProviders = async () => {
-		axios.get('http://localhost:3001/api/users').then((response) => {
+		axios.get('https://mg.bp-pspu.cfapi/users').then((response) => {
 			allProviders.value = response.data;
 		})
 	}
