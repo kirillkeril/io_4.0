@@ -27,7 +27,7 @@ export const useDiscussionStore = defineStore('discussion', () => {
 
 		console.log(disc);
 
-		let newData = JSON.stringify({...disc});
+		let newData = JSON.stringify({ ...disc });
 
 		localStorage.setItem('currentIdenty', newData);
 	}
@@ -48,13 +48,22 @@ export const useDiscussionStore = defineStore('discussion', () => {
 	const startDiscussion = async (addresseeId: string) => {
 		if (userStore.user == null) return;
 		const newDisck: Ref<Discussoin | null> = ref(null);
+		console.log(userStore.user.role);
 		if (userStore.user.role == 'customer')
-			newDisck.value = { customerId: userStore.user._id, providerId: addresseeId, startDate: Date.now().toLocaleString() };
+			newDisck.value = {
+				customerId: userStore.user._id || '', providerId: addresseeId || '', startDate: Date.now().toLocaleString(), type: '',
+				status: '',
+				contractNumber: ''
+			};
 		if (userStore.user.role == 'provider')
-			newDisck.value = { customerId: addresseeId, providerId: userStore.user!._id, startDate: Date.now().toLocaleString() };
+			newDisck.value = {
+				customerId: addresseeId  || '', providerId: userStore.user._id  || '', startDate: Date.now().toLocaleString(), type: '',
+				status: '',
+				contractNumber: ''
+			};
 		console.log(newDisck);
 		const res = await axios.post<Discussoin>('http://localhost:3001/api/discussion', newDisck.value);
-		console.log(res);		
+		console.log(res.data);
 		setDiscussion(res.data);
 		setCurrentAddressee(addresseeId);
 		router.push(`/suppliers/discussion/${addresseeId}`);

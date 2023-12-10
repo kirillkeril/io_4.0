@@ -10,7 +10,7 @@ const { getUser } = useUserStore();
 const { fetchAllDiscussions } = useDiscussionStore();
 // remove any existing listeners (after a hot module replacement)
 socket.off();
-getUser('6574abbc6d7e0a2e72b0b58a');
+getUser();
 fetchAllDiscussions();
 </script>
 

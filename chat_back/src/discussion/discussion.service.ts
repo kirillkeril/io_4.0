@@ -9,20 +9,22 @@ export class DiscussionService {
   constructor(
     @InjectModel(Discussion.name)
     private readonly discussionRepository: Model<Discussion>,
-  ) {}
+  ) { }
 
   async create(createDiscussionDto: CreateDiscussionDto) {
+    
+    console.log(1);
     const messagesId = `${createDiscussionDto.customerId}:${createDiscussionDto.providerId}`;
-    const candidate = this.discussionRepository.findOne({messagesId: messagesId});
-    if (candidate) return candidate;
-    const newDisc = await this.discussionRepository.create({
-      ...createDiscussionDto,
-    });
-    console.log({ ...createDiscussionDto });
-
+    const candidate = await this.discussionRepository.findOne({ messagesId: messagesId });
+    console.log(candidate);
+    if (candidate) return candidate.toObject();
+    const newDisc = await this.discussionRepository.create(createDiscussionDto);
+    
+    console.log(3);
     newDisc.status = 'Ввод сведений';
     newDisc.type = '';
-
+    
+    console.log("new disc service", newDisc);
     await newDisc.save();
     return newDisc;
   }

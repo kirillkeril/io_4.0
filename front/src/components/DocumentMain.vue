@@ -172,7 +172,7 @@
 	</div>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { computed, onMounted, ref } from 'vue';
 import InlineSvg from '../components/InlineSvg.vue';
 import {useDocumentsStore} from '../stores/document';

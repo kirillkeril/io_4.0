@@ -6,7 +6,7 @@ import axios from 'axios';
 export const useUserStore = defineStore('users', () => {
 	const user: ComputedRef<User | null> = computed(() => _user.value || JSON.parse(localStorage.getItem('user')) as User);
 	const _user: Ref<User | null> = ref(null);
-	const userId: Ref<string> = ref('6574abbc6d7e0a2e72b0b58a')
+	const userId: Ref<string> = ref('6575686259e74bc56c1d27c1')
 
 	const getUser = async () => {
 		_user.value = await getUserById(userId.value);

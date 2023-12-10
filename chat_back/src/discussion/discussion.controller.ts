@@ -7,19 +7,19 @@ export class DiscussionController {
   constructor(private readonly discussionService: DiscussionService) {}
 
   @Post()
-  create(@Body() createDiscussionDto: CreateDiscussionDto) {
-    console.log(createDiscussionDto);
-
-    return this.discussionService.create({ ...createDiscussionDto });
+  async create(@Body() createDiscussionDto: CreateDiscussionDto) {
+    
+    console.log("new disc", createDiscussionDto);
+    return await this.discussionService.create(createDiscussionDto);
   }
 
   @Get()
-  findAll() {
-    return this.discussionService.findAll();
+  async findAll() {
+    return await this.discussionService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.discussionService.findOne(id);
+  async findOne(@Param('id') id: string) {
+    return await this.discussionService.findOne(id);
   }
 }

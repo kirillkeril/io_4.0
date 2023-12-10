@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { Ref, ref } from 'vue'
 import axios from 'axios'
 
 export enum states {
@@ -9,13 +9,13 @@ export enum states {
 	success = 'Принят'
 }
 export const useDocumentsStore = defineStore('document', () => {
-	const formData = ref({});
+	const formData: Ref<FormData> = ref(new FormData());
 	const lastVersionData = ref();
 	const state = ref(states.input);
 	const allVersions = ref([]);
 	const dataPdf = ref();
-	
-	const sendNewVersion = (resetData) => {
+
+	const sendNewVersion = () => {
 		let local = JSON.parse(localStorage.getItem('currentIdenty'));
 		console.log(formData.value);
 		/* @ts-ignore */
@@ -35,7 +35,7 @@ export const useDocumentsStore = defineStore('document', () => {
 
 		console.log(id);
 
-		id = id.data[id.data.length - 1]._id;
+		id = id.data[id.data.length - 1]._id ?? 0;
 
 		const res = await axios.post('https://mg.vp-pspu.cf/back/show_specific_version', { _id: id });
 
@@ -59,8 +59,11 @@ export const useDocumentsStore = defineStore('document', () => {
 		);
 	}
 
+
+	/*ts-ignore*/
 	const setNewFormData = (newData: Object) => {
-		formData.value = newData;
+		/* @ts-ignore */
+		formData.value = newData.ildelz;
 
 		state.value = states.pending;
 	}
@@ -68,7 +71,8 @@ export const useDocumentsStore = defineStore('document', () => {
 	const setSuccessStatus = () => {
 		state.value = states.success;
 
-		formData.value.Status = states.success;
+		/*ts-ignore*/
+		formData.value.append("Status", states.success);
 
 		sendNewVersion();
 	}
@@ -76,27 +80,31 @@ export const useDocumentsStore = defineStore('document', () => {
 	const setRejectedStatus = () => {
 		state.value = states.rejected;
 
-		formData.value.Status = states.rejected;
+
+		/*ts-ignore*/
+		formData.value.append("Status", states.rejected);
 
 		sendNewVersion();
 	}
 
-	const setMessage = (text: String) => {
-		formData.value.Message = text;
+
+	/*ts-ignore*/
+	const setMessage = () => {
+		formData.value.append("Message", "text");
 
 		sendNewVersion();
 	}
 
 	return {
-		sendNewVersion, 
-		setNewFormData, 
-		getLastVersion, 
-		setMessage, 
-		lastVersionData, 
-		downloadPdf, 
-		setSuccessStatus, 
-		setRejectedStatus, 
-		allVersions, 
+		sendNewVersion,
+		setNewFormData,
+		getLastVersion,
+		setMessage,
+		lastVersionData,
+		downloadPdf,
+		setSuccessStatus,
+		setRejectedStatus,
+		allVersions,
 		dataPdf,
 		state
 	}

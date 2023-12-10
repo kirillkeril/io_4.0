@@ -5,9 +5,10 @@
 				<InlineSvg svg="arrow-left" />
 				<h1>Документация</h1>
 			</router-link>
-			<ButtonUI green icon="check" @click="state == states.pending ? sendNewVersion : null" v-if="state == states.input">Согласовать
+			<ButtonUI green icon="check" @click="sendNewVersion">Согласовать
 			</ButtonUI>
-			<ButtonUI blueFill @click="isOpen = true" v-else>Отправить на рассмотрение
+			<ButtonUI blueFill @click="isOpen = true">
+				Отправить на рассмотрение
 			</ButtonUI>
 		</div>
 		<div class="document__body">

@@ -76,7 +76,7 @@
 	</div>
 </template>
 
-<script lang="ts">
+<script lang="js">
 import { Ref, ref } from 'vue';
 import {states, useDocumentsStore} from '../stores/document';
 import { storeToRefs } from 'pinia';
@@ -100,8 +100,8 @@ export default {
 		InlineSvg
 	},
 	setup() {
-		const oldValues: Ref<any[]> = ref([]);
-		const newValues: Ref<any[]> = ref([]);
+		const oldValues = ref([]);
+		const newValues = ref([]);
 		const { state } = storeToRefs(useDocumentsStore());
 		const { sendNewVersion } = useDocumentsStore();
 		const { downloadPdf } = useDocumentsStore();
