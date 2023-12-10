@@ -27,7 +27,7 @@ export class MessagesGateway {
       inputMsg,
     ) as CreateMessageDto;
     const message = await this.messagesService.create(createMessageDto);
-    const ids = createMessageDto.messageId.split(':');
+    // const ids = createMessageDto.messageId.split(':');
     this.clients.forEach((c) => {
       c.emit('newMessageCreated', JSON.stringify(message));
     });
@@ -39,11 +39,11 @@ export class MessagesGateway {
 
     this.clients.add(client);
     const messages = await this.messagesService.findAll();
-    const filteredMessages = messages.filter((m) => {
-      return m.messageId == `${msg.customerId}:${msg.providerId}`;
-    });
-    console.log(filteredMessages.length);
-    filteredMessages.forEach((m) => {
+    // const filteredMessages = messages.filter((m) => {
+    //   return m.messageId == `${msg.customerId}:${msg.providerId}`;
+    // });
+    // console.log(filteredMessages.length);
+    messages.forEach((m) => {
       client.emit('allMessagesFinded', JSON.stringify(m));
     });
   }

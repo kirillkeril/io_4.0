@@ -12,8 +12,7 @@ export class DiscussionService {
   ) { }
 
   async create(createDiscussionDto: CreateDiscussionDto) {
-    
-    console.log(1);
+
     const messagesId = `${createDiscussionDto.customerId}:${createDiscussionDto.providerId}`;
     const candidate = await this.discussionRepository.findOne({ messagesId: messagesId });
     console.log(candidate);

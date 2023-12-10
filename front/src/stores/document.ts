@@ -14,8 +14,13 @@ export const useDocumentsStore = defineStore('document', () => {
 	const state = ref(states.input);
 	const allVersions = ref([]);
 	const dataPdf = ref();
+	const providerAccepted: Ref<boolean> = ref(false);
+	const customerAccepted: Ref<boolean> = ref(false);
+	const actVal: Ref<string> = ref('');
 
-	const sendNewVersion = () => {
+	const userStore = useUserStore();
+
+	const sendNewVersion = async () => {
 		let local = JSON.parse(localStorage.getItem('currentIdenty'));
 		console.log(formData.value);
 		/* @ts-ignore */
@@ -26,6 +31,23 @@ export const useDocumentsStore = defineStore('document', () => {
 		axios.post('https://mg.vp-pspu.cf/back/compare-json', formData.value).then((response) => {
 			console.log(response);
 		})
+		await getCurrentVersion();
+		const res = await axios.post('https://mg.vp-pspu.cf/back/compare-json', formData.value);
+		validateStatus(res.data);
+		await axios.post('http://localhost:3001/api/mail', {email: "kirillagishin@ya.ru", message: "Привет! Вам уведомление!"});
+	}
+
+	const validateStatus = (res) => {
+		if(res.Podpisant == "True" && res.Postavshik == "True"){
+			state.value = states.success;
+		}
+	}
+
+	const getCurrentVersion = async () => {
+		const res = await axios.get('https://mg.vp-pspu.cf/back/get_current_version');
+		actVal.value = res.data['_id'];
+		console.log(res.data);
+		
 	}
 
 	const getLastVersion = async () => {
@@ -52,9 +74,9 @@ export const useDocumentsStore = defineStore('document', () => {
 		allVersions.value = res.data;
 	}
 
-	const downloadPdf = async (id) => {
+	const downloadPdf = async () => {
 		window.open(
-			`https://mg.vp-pspu.cf/back/pdf-file?_id=${id}`,
+			`https://mg.vp-pspu.cf/back/pdf-file?_id=${actVal.value}`,
 			'_blank'
 		);
 	}
@@ -62,7 +84,7 @@ export const useDocumentsStore = defineStore('document', () => {
 
 	const setNewFormData = (newData: Object) => {
 		console.log(newData);
-		
+
 		/*@ts-ignore*/
 		formData.value = newData;
 

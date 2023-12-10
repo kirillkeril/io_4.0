@@ -34,10 +34,13 @@ export const useDiscussionStore = defineStore('discussion', () => {
 
 	const setCurrentAddressee = async (addresseeId: string) => {
 		localStorage.setItem('addresseeId', addresseeId);
+		_addressee.value = await userStore.getUserById(addresseeId); 
 	}
 
 	const getCurrentAddressee = async () => {
-		return localStorage.getItem('addresseeId');
+		const id = localStorage.getItem('addresseeId');
+		setCurrentAddressee(id);
+		return id;
 	}
 
 	const getCurrentDiscussion = async () => {
@@ -48,7 +51,6 @@ export const useDiscussionStore = defineStore('discussion', () => {
 	const startDiscussion = async (addresseeId: string) => {
 		if (userStore.user == null) return;
 		const newDisck: Ref<Discussoin | null> = ref(null);
-		console.log(userStore.user.role);
 		if (userStore.user.role == 'customer')
 			newDisck.value = {
 				customerId: userStore.user._id || '', providerId: addresseeId || '', startDate: Date.now().toLocaleString(), type: '',
@@ -57,13 +59,12 @@ export const useDiscussionStore = defineStore('discussion', () => {
 			};
 		if (userStore.user.role == 'provider')
 			newDisck.value = {
-				customerId: addresseeId  || '', providerId: userStore.user._id  || '', startDate: Date.now().toLocaleString(), type: '',
+				customerId: addresseeId || '', providerId: userStore.user._id || '', startDate: Date.now().toLocaleString(), type: '',
 				status: '',
 				contractNumber: ''
 			};
-		console.log(newDisck);
 		const res = await axios.post<Discussoin>('https://mg.vp-pspu.cf/api/discussion', newDisck.value);
-		console.log(res.data);
+		console.log(res.data);		
 		setDiscussion(res.data);
 		setCurrentAddressee(addresseeId);
 		router.push(`/suppliers/discussion/${addresseeId}`);

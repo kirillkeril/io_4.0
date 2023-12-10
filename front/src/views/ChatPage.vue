@@ -11,7 +11,6 @@ import { storeToRefs } from 'pinia';
 import { useDiscussionStore } from '../stores/discussion';
 import { useUserStore } from '../stores/users';
 import { useRouter } from 'vue-router';
-import axios from 'axios';
 
 const messagesStore = useMessagesStore();
 const { messages } = storeToRefs(messagesStore);
@@ -35,27 +34,32 @@ const sendMessage = async () => {
   messageInput.value = '';
 }
 
-const file = ref('');
+// const file = ref('');
 
-const sendFile = async () => {
-  const formdata = new FormData();
-  formdata.append("file", file.value);
-  const res = await axios.post('https://mg.vp-pspu.cf/', formdata, {
-    headers: {
-      'Content-Type': 'multipart/form-data'
-    }
-  });
-  console.log(res.data);
-}
+// const sendFile = async () => {
+//   const formdata = new FormData();
+//   formdata.append("file", file.value);
+//   const res = await axios.post('https://mg.vp-pspu.cf/', formdata, {
+//     headers: {
+//       'Content-Type': 'multipart/form-data'
+//     }
+//   });
+//   console.log(res.data);
+// }
 
 
 onMounted(async () => {
-  messagesStore.bindEvents();
-  if(!user) await getUser();
-  console.log(router.currentRoute.value.params.id);
-  
-  const id = router.currentRoute.value.params.id || discussionStore.getCurrentAddressee();
-  await discussionStore.startDiscussion(`${id}`);
+  try {
+    messagesStore.bindEvents();
+    if (!user) await getUser();
+    console.log(user);
+    const id = router.currentRoute.value.params.id || discussionStore.getCurrentAddressee();
+    await discussionStore.startDiscussion(`${id}`);
+    console.log(addressee);
+  } catch (e) {
+    console.log(e);
+
+  }
 });
 </script>
 
@@ -78,8 +82,7 @@ onMounted(async () => {
       </div>
 
       <div class="messages" style="overflow-y:auto">
-        <div v-for="(msg, idx) in messages" :key="msg._id"
-          :class="msg.authorId == user?._id ? 'messages_internal' : 'messages_external'">
+        <div v-for="(msg, idx) in messages" :key="msg._id" class='messages_external'>
           <MessageUI :message="msg" :headless="messages[idx - 1]?.authorId === msg.authorId"
             :without-icon="messages[idx - 1]?.authorId == msg.authorId" />
         </div>
@@ -89,7 +92,7 @@ onMounted(async () => {
         <div class="form_input">
           <label class="file-upload-container">
             <InlineSvg svg="clip" />
-            <input @change.prevent="sendFile" ref="file" accept=".docx, .doc, .pdf, .xlsx," class="file-upload" type="file" icon="clip" style="padding: 0">
+            <!-- <input @change.prevent="sendFile" ref="file" accept=".docx, .doc, .pdf, .xlsx," class="file-upload" type="file" icon="clip" style="padding: 0"> -->
           </label>
           <input v-model="messageInput" />
           <ButtonUI icon="send" style="padding: 0" type="subimit"></ButtonUI>
