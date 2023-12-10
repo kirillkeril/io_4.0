@@ -60,10 +60,11 @@ export const useDocumentsStore = defineStore('document', () => {
 	}
 
 
-	/*ts-ignore*/
 	const setNewFormData = (newData: Object) => {
-		/* @ts-ignore */
-		formData.value = newData.ildelz;
+		console.log(newData);
+		
+		/*@ts-ignore*/
+		formData.value = newData;
 
 		state.value = states.pending;
 	}
@@ -71,8 +72,8 @@ export const useDocumentsStore = defineStore('document', () => {
 	const setSuccessStatus = () => {
 		state.value = states.success;
 
-		/*ts-ignore*/
-		formData.value.append("Status", states.success);
+		/*@ts-ignore*/
+		formData.value.Status = states.success;
 
 		sendNewVersion();
 	}
@@ -81,16 +82,16 @@ export const useDocumentsStore = defineStore('document', () => {
 		state.value = states.rejected;
 
 
-		/*ts-ignore*/
-		formData.value.append("Status", states.rejected);
+		/* @ts-ignore*/
+		formData.value.Status = states.rejected;
 
 		sendNewVersion();
 	}
 
 
-	/*ts-ignore*/
-	const setMessage = () => {
-		formData.value.append("Message", "text");
+	const setMessage = (text: String) => {
+		/* @ts-ignore */
+		formData.value.Message = text;
 
 		sendNewVersion();
 	}

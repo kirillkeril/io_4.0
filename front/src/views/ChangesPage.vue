@@ -47,6 +47,8 @@ const getChanges = async () => {
   const customerId =  currentDiscussion.value.customerId;
   const res = await axios.get(`https://mg.vp-pspu.cf/back/get_all_versions/?ProviderID=${providerId}&CustomerID=${customerId}`);
   allChanges.value = res.data;
+  console.log(res);
+  
 
 	for (const c of allChanges.value) {
 		const res = await axios.get(`https://mg.vp-pspu.cf/back/get_difference?_id=${c._id}`);
