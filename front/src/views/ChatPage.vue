@@ -11,44 +11,28 @@ import { storeToRefs } from 'pinia';
 import { useDiscussionStore } from '../stores/discussion';
 import { useUserStore } from '../stores/users';
 import { useRouter } from 'vue-router';
-import { User } from '../types/user';
 import axios from 'axios';
 
 const messagesStore = useMessagesStore();
 const { messages } = storeToRefs(messagesStore);
-const { user, getUserById } = useUserStore();
+const { user, getUser } = useUserStore();
 const messageInput: Ref<string> = ref('');
-const { currentDiscussion } = storeToRefs(useDiscussionStore());
+const { currentDiscussion, addressee } = storeToRefs(useDiscussionStore());
+const discussionStore = useDiscussionStore();
 /* @ts-ignore */
 const { getCurrentDiscussion } = useDiscussionStore();
 const router = useRouter();
 
-const addressee: Ref<User | null> = ref(null);
-
-const sendMessage = () => {
-  if (!currentDiscussion.value) return;
-  if (!user) {
-    router.push('/');
-    return;
-  };
-
+const sendMessage = async () => {
   const message: Message = {
-    messageId: `${currentDiscussion.value?.customerId}:${currentDiscussion.value?.providerId}`,
-    authorId: user!._id,
-    authorName: user!.fullname,
+    messageId: `${currentDiscussion.value.customerId}:${currentDiscussion.value.providerId}`,
+    authorId: user._id,
+    authorName: user.fullname,
     text: messageInput.value
   }
   if (!message.text) return;
   messagesStore.createMessage(message);
   messageInput.value = '';
-}
-
-const getAddressee = async () => {
-  if (!currentDiscussion.value) return;
-  if (user!.role == 'customer')
-    addressee.value = await getUserById(currentDiscussion.value!.providerId);
-  if (user!.role == 'provider')
-    addressee.value = await getUserById(currentDiscussion.value!.customerId);
 }
 
 const file = ref('');
@@ -65,9 +49,13 @@ const sendFile = async () => {
 }
 
 
-onMounted(() => {
+onMounted(async () => {
   messagesStore.bindEvents();
-  getAddressee();
+  if(!user) await getUser();
+  console.log(router.currentRoute.value.params.id);
+  
+  const id = router.currentRoute.value.params.id || discussionStore.getCurrentAddressee();
+  await discussionStore.startDiscussion(`${id}`);
 });
 </script>
 
@@ -79,7 +67,7 @@ onMounted(() => {
         <h1>Чат</h1>
       </router-link>
       <ButtonUI icon="document" link="/suppliers/discussion/document" blue-fill>Документация</ButtonUI>
-    </header>{{ user.fullname }}
+    </header>
     <main class="chat_main">
       <div class="chat_addressee">
         <img src="" alt="">
