@@ -50,21 +50,13 @@
 			</div>
 			<footer class="review_main_footer">
 				<p v-if="change?.Message?.new">Комментарий</p>
-				<textarea 
-					class="comment"
-					v-if="change?.Message?.new"
-					:value="change.Message.new" 
-				></textarea>
+				<textarea class="comment" v-if="change?.Message?.new" :value="change.Message.new"></textarea>
 				<div class="buttons" v-if="!old">
 					<ButtonUI blue-trans @click="writeIsShow = true">Аргументировать отказ</ButtonUI>
 					<ButtonUI blue-trans v-if="state == states.success" @click="downloadPdf(change._id.new)">Открыть PDF</ButtonUI>
 					<ButtonUI blue-fill icon="check" v-if="!getIsWrite" @click="setSuccessStatus">Принять</ButtonUI>
 				</div>
-				<textarea 
-					class="comment"
-					v-if="getIsWrite"
-					placeholder="Аргументируйте свой отказ..."
-				></textarea>
+				<textarea class="comment" v-if="getIsWrite" placeholder="Аргументируйте свой отказ..."></textarea>
 				<div class="buttons">
 					<ButtonUI blue-fill v-if="getIsWrite" @click="setRejectedStatus">Отказать</ButtonUI>
 				</div>
@@ -77,8 +69,8 @@
 </template>
 
 <script lang="js">
-import { Ref, ref } from 'vue';
-import {states, useDocumentsStore} from '../stores/document';
+import { ref } from 'vue';
+import { states, useDocumentsStore } from '../stores/document';
 import { storeToRefs } from 'pinia';
 import BadgeUI from '../components/ui/BadgeUI.vue'
 import InlineSvg from '../components/InlineSvg.vue'
@@ -146,7 +138,7 @@ export default {
 							dateObj = day + "." + month + "." + year
 
 							arr.push({ value: dateObj, label: k })
-						} else	
+						} else
 							arr.push({ value: this.change[k].new, label: k })
 					}
 				});

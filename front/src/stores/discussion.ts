@@ -17,7 +17,7 @@ export const useDiscussionStore = defineStore('discussion', () => {
 	const _currentDiscussion: Ref<Discussoin | null> = ref(null);
 
 	const fetchAllDiscussions = () => {
-		axios.get('https://mg.bp-pspu.cfapi/discussion').then((response) => {
+		axios.get('https://mg.vp-pspu.cf/api/discussion/').then((response) => {
 			allDiscussions.value = response.data;
 		})
 	}
@@ -62,7 +62,7 @@ export const useDiscussionStore = defineStore('discussion', () => {
 				contractNumber: ''
 			};
 		console.log(newDisck);
-		const res = await axios.post<Discussoin>('https://mg.bp-pspu.cfapi/discussion', newDisck.value);
+		const res = await axios.post<Discussoin>('https://mg.vp-pspu.cf/discussion', newDisck.value);
 		console.log(res.data);
 		setDiscussion(res.data);
 		setCurrentAddressee(addresseeId);

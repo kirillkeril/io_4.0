@@ -240,7 +240,7 @@ import { storeToRefs } from 'pinia';
 
 
 			}, 1500);
-			
+				
 		}
 	)
 </script>
