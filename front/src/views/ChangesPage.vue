@@ -7,7 +7,13 @@
       <div class="for_review">
         <h2>К рассмотрению</h2>
         <div class="for-review_items">
-          <ReviewItem :badges="[{text: 'От заказчика', color: '#3366ff'}, {text: 'На рассмотрении', color: '#ff8761'}]"/>
+          <ReviewItem 
+		  	:badges="[
+				{text: 'От заказчика', color: '#3366ff'}, 
+				{text: 'На рассмотрении', color: '#ff8761'}
+			]"
+			:change="changes[changes.length - 1]"
+		/>
         </div>
       </div>
       <div class="changes_archive">
@@ -41,10 +47,12 @@ const getChanges = async () => {
   const customerId =  currentDiscussion.value.customerId;
   const res = await axios.get(`https://mg.vp-pspu.cf/back/get_all_versions/?ProviderID=${providerId}&CustomerID=${customerId}`);
   allChanges.value = res.data;
-  allChanges.value.forEach(async (c) => {
-    const res = await axios.get(`https://mg.vp-pspu.cf/back/get_difference?_id=${c._id}`);
-    changes.value.push(res.data);
-  });
+
+	for (const c of allChanges.value) {
+		const res = await axios.get(`https://mg.vp-pspu.cf/back/get_difference?_id=${c._id}`);
+		
+		changes.value.push(res.data);
+	}
 };
 
 onMounted(() => {
@@ -69,7 +77,6 @@ onMounted(() => {
     h1
       font-size: 36px
   &_main
-    max-height: calc(100dvh - 220px)
     border-radius: 32px
     background: #fff
     height: 100%

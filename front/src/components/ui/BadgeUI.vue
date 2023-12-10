@@ -5,6 +5,7 @@
 </template>
 
 <script setup lang="ts">
+name: 'BadgeUI'
 interface Props {
   text: string;
   color: string;

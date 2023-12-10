@@ -4,6 +4,7 @@ import DiscussionUI from './DiscussionUI.vue'
 import SelectUI from './SelectUI.vue'
 import DocumentAboutUI from './DocumentAboutUI.vue'
 import SpecificationItem from './SpecificationItem.vue'
+import BadgeUI from './BadgeUI.vue'
 
 export default [
     ButtonUI,
@@ -11,5 +12,6 @@ export default [
 	DiscussionUI,
 	SelectUI,
 	DocumentAboutUI,
-	SpecificationItem
+	SpecificationItem,
+	BadgeUI
 ]

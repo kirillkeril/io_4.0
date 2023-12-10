@@ -1,26 +1,25 @@
 <template>
-  <div :class="`review review${old ? '_old' : ''}`">
-    <div class="review_info" @click.prevent="() => isOpen = !isOpen">
-      <div class="review_info_data">
-        <span class="review_info_time">
-          От 24.12.2023
-          <span v-if="!old" class="review_info_deadline">(осталось 2 рабочих дня)</span>
-        </span>
-        <BadgeUI v-for="i in badges" :key="i.text" class="badge" :text="i.text" :color="i.color" />
-      </div>
-      <InlineSvg svg="chevron-down" :class="`icon icon${isOpen ? '_active' : ''}`" />
-    </div>
+	<div :class="`review review${old ? '_old' : ''}`">
+		<div class="review_info" @click.prevent="() => isOpen = !isOpen">
+			<div class="review_info_data">
+				<span class="review_info_time">
+					От 24.12.2023
+					<span v-if="!old" class="review_info_deadline">(осталось 2 рабочих дня)</span>
+				</span>
+				<BadgeUI v-for="i in badges" :key="i.text" class="badge" :text="state" :color="i.color" />
+			</div>
+			<InlineSvg svg="chevron-down" :class="`icon icon${isOpen ? '_active' : ''}`" />
+		</div>
 
-    <div v-if="isOpen" :class="`review_main ${isOpen ? '' : 'review_main_disabled'}`">
-      <div class="review_main_before">
-        <h3><span>Ранняя</span>версия</h3>
-        <div class="review_main_changes">
-          <label v-for="o in oldValues" :key="o.label" for="name" class="review_main_field">
-            <span>{{ o.label }}</span>
-            <textarea name="name"
-              :value="o.value" />
-          </label>
-          <!-- <label for="name" class="review_main_field">
+		<div v-if="isOpen" :class="`review_main ${isOpen ? '' : 'review_main_disabled'}`">
+			<div class="review_main_before">
+				<h3><span>Ранняя</span>версия</h3>
+				<div class="review_main_changes">
+					<label v-for="o in getReviewOld" :key="o.label" for="name" class="review_main_field">
+						<span>{{ o.label }}</span>
+						<textarea name="name" :value="o.value" />
+					</label>
+					<!-- <label for="name" class="review_main_field">
             <span>Предмет контракта</span>
             <textarea name="name"
               placeholder="Провод монтажный витой Мезонин 2х1,5 мм в декоративной оплетке для отрытой проводки" />
@@ -29,17 +28,16 @@
             <span>Место заключения</span>
             <textarea name="name" placeholder="Очко динозавтра" />
           </label> -->
-        </div>
-      </div>
-      <div class="review_main_after">
-        <h3><span>Измененная</span>версия</h3>
-        <div class="review_main_changes">
-          <label v-for="o in newValues" :key="o.label" for="name" class="review_main_field">
-            <span>{{ o.label }}</span>
-            <textarea name="name"
-              :value="o.value" />
-          </label>
-          <!-- <label for="name" class="review_main_field">
+				</div>
+			</div>
+			<div class="review_main_after">
+				<h3><span>Измененная</span>версия</h3>
+				<div class="review_main_changes">
+					<label v-for="o in getReviewNew" :key="o.label" for="name" class="review_main_field">
+						<span>{{ o.label }}</span>
+						<textarea name="name" :value="o.value" />
+					</label>
+					<!-- <label for="name" class="review_main_field">
             <span>Предмет контракта</span>
             <textarea name="name"
               placeholder="Провод монтажный витой Мезонин 2х1,5 мм в декоративной оплетке для отрытой проводки" />
@@ -48,45 +46,137 @@
             <span>Место заключения</span>
             <textarea name="name" placeholder="Очко динозавтра" />
           </label> -->
-        </div>
-      </div>
-      <footer class="review_main_footer">
-        <textarea class="comment"
-          value="'Цена единицы дополнительно поставляемого Товара или цена единицы Товара при уменьшении предусмотренного Договором количества поставляемого Товара должна определяться как частное от деления первоначальной цены Договора на предусмотренное в Договоре количество Товара'" />
-        <div class="buttons" v-if="!old">
-          <ButtonUI blue-trans>Аргументировать отказ</ButtonUI>
-          <ButtonUI blue-fill icon="check">Принять</ButtonUI>
-        </div>
-      </footer>
-    </div>
-  </div>
+				</div>
+			</div>
+			<footer class="review_main_footer">
+				<p v-if="change?.Message?.new">Комментарий</p>
+				<textarea 
+					class="comment"
+					v-if="change?.Message?.new"
+					:value="change.Message.new" 
+				></textarea>
+				<div class="buttons" v-if="!old">
+					<ButtonUI blue-trans @click="writeIsShow = true">Аргументировать отказ</ButtonUI>
+					<ButtonUI blue-trans v-if="state == states.success" @click="downloadPdf(change._id.new)">Открыть PDF</ButtonUI>
+					<ButtonUI blue-fill icon="check" v-if="!getIsWrite" @click="setSuccessStatus">Принять</ButtonUI>
+				</div>
+				<textarea 
+					class="comment"
+					v-if="getIsWrite"
+					placeholder="Аргументируйте свой отказ..."
+				></textarea>
+				<div class="buttons">
+					<ButtonUI blue-fill v-if="getIsWrite" @click="setRejectedStatus">Отказать</ButtonUI>
+				</div>
+				<div class="buttons" v-if="old">
+					<ButtonUI blue-fill @click="sendNewVersion(change)">Вернуться к данной версии</ButtonUI>
+				</div>
+			</footer>
+		</div>
+	</div>
 </template>
 
-<script setup lang="ts">
-import BadgeUI from './ui/BadgeUI.vue';
-import ButtonUI from './ui/ButtonUI.vue';
+<script lang="ts">
 import { Ref, ref } from 'vue';
+import {states, useDocumentsStore} from '../stores/document';
+import { storeToRefs } from 'pinia';
+import BadgeUI from '../components/ui/BadgeUI.vue'
+import InlineSvg from '../components/InlineSvg.vue'
 
-interface Props {
-  old?: boolean;
-  badges: { text: string, color: string }[];
-  change?: any;
+export default {
+	data() {
+		return {
+			isOpen: false,
+			writeIsShow: false
+		}
+	},
+	props: {
+		old: { type: Boolean },
+		badges: { type: Object },
+		change: { type: Object }
+	},
+	components: {
+		BadgeUI,
+		InlineSvg
+	},
+	setup() {
+		const oldValues: Ref<any[]> = ref([]);
+		const newValues: Ref<any[]> = ref([]);
+		const { state } = storeToRefs(useDocumentsStore());
+		const { sendNewVersion } = useDocumentsStore();
+		const { downloadPdf } = useDocumentsStore();
+		const { setSuccessStatus } = useDocumentsStore();
+		const { setRejectedStatus } = useDocumentsStore();
+		const { dataPdf } = useDocumentsStore();
+
+		return { oldValues, newValues, state, states, sendNewVersion, downloadPdf, setSuccessStatus, dataPdf, setRejectedStatus }
+	},
+	// console.log(change);
+	computed: {
+		getReviewOld() {
+			return this.filter(false)
+		},
+		getReviewNew() {
+			return this.filter(true)
+		},
+		getIsWrite() {
+			return this.writeIsShow;
+		},
+		getDataPdf() {
+			return this.dataPdf;
+		}
+	},
+	methods: {
+		filter(value) {
+			const arr = [];
+			if (value) {
+				Object.keys(this.change ?? {}).forEach((k) => {
+					if (this.change[k].old && this.change[k].new) {
+						if (k == 'timestamp') {
+							let dateObj = new Date(this.change[k].new);
+
+							let month = dateObj.getUTCMonth() + 1;
+							month = String(month).length == 1 ? `0${month}` : month;
+
+							let day = dateObj.getUTCDate();
+							day = String(day).length == 1 ? `0${day}` : day;
+
+							let year = dateObj.getUTCFullYear();
+
+							dateObj = day + "." + month + "." + year
+
+							arr.push({ value: dateObj, label: k })
+						} else	
+							arr.push({ value: this.change[k].new, label: k })
+					}
+				});
+				return arr;
+			}
+			Object.keys(this.change ?? {}).forEach((k) => {
+				if (this.change[k].old && this.change[k].new) {
+					if (k == 'timestamp') {
+						let dateObj = new Date(this.change[k].old);
+
+						let month = dateObj.getUTCMonth() + 1;
+						month = String(month).length == 1 ? `0${month}` : month;
+
+						let day = dateObj.getUTCDate();
+						day = String(day).length == 1 ? `0${day}` : day;
+
+						let year = dateObj.getUTCFullYear();
+						dateObj = day + "." + month + "." + year
+
+						arr.push({ value: dateObj, label: k })
+					} else
+						arr.push({ value: this.change[k].old, label: k })
+				}
+			});
+			return arr;
+		}
+	}
 }
 
-const isOpen: Ref<boolean> = ref(false);
-const { old, badges, change } = defineProps<Props>();
 
-const oldValues: Ref<any[]> = ref([]);
-const newValues: Ref<any[]> = ref([]);
-console.log(change);
-
-Object.keys(change ?? {}).forEach((k) => {
-  if(change[k].old || change[k].new) {
-    console.log(k, change[k]);
-    oldValues.value.push({value: change[k].old, label: k})
-    newValues.value.push({value: change[k].new, label: k})
-  }
-});
 </script>
 
 <style lang="sass" scoped>

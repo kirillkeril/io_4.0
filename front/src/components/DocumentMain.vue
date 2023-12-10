@@ -2,7 +2,7 @@
 	<div class="document-main">
 		<div class="document-main__head">
 			<h3>Основная информация</h3>
-			<p>Ввод сведений</p>
+			<BadgeUI :text="form.Status || state" color="#FF8761"/>
 		</div>
 		<div class="document-main__body">
 			<div class="document-main__left">
@@ -70,6 +70,7 @@
 							class="input" 
 							v-model="form.Number"
 							@change="changeData"
+							required
 						/>
 					</div>
 					<div class="document-main__item">
@@ -88,6 +89,7 @@
 									class="input"
 									v-model="form.Period" 
 									@change="changeData"
+									required
 								/>
 							</div>
 							<div>
@@ -97,9 +99,9 @@
 									id="after" 
 									name="after" 
 									placeholder="23.12.2023"
-									class="input" 
-									v-model="form.dateEnd" 
-									@change="changeData"
+									class="input"
+									:value="findEndDate"
+									required
 								/>
 							</div>
 						</div>
@@ -118,6 +120,7 @@
 						class="input"
 						v-model="form.Predmet" 
 						@change="changeData"
+						required
 					></textarea>
 				</div>
 				<div class="document-main__item">
@@ -133,6 +136,7 @@
 						class="input" 
 						v-model="form.Mesto" 
 						@change="changeData"
+						required
 					>
 				</div>
 				<div class="document-main__item">
@@ -148,6 +152,7 @@
 						class="input" 
 						v-model="form.IKZ" 
 						@change="changeData"
+						required
 					>
 				</div>
 				<div class="document-main__item">
@@ -164,9 +169,10 @@
 							class="input" 
 							v-model="form.Istochnik" 
 							@change="changeData"
+							required
 						>
 						<div class="checkbox">
-							<input type="checkbox" id="nds" name="nds" v-model="form.nds" @change="changeData"/>
+							<input type="checkbox" id="nds" name="nds" v-model="form.nds" @change="changeData" required/>
 							<label for="nds">
 								<InlineSvg svg="check" class="checkbox-check"/>
 							</label>
@@ -175,15 +181,16 @@
 					</div>
 				</div>
 			</div>
-			<!-- {{ lastVersionData }} -->
 		</div>
 	</div>
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import InlineSvg from '../components/InlineSvg.vue';
 import {useDocumentsStore} from '../stores/document';
+import BadgeUI from './ui/BadgeUI.vue';
+import { storeToRefs } from 'pinia';
 	const {
 		formProps
 	} = defineProps();
@@ -191,6 +198,7 @@ import {useDocumentsStore} from '../stores/document';
 	const { setNewFormData } = useDocumentsStore();
 	const { getLastVersion } = useDocumentsStore();
 	const lastVersionData = useDocumentsStore();
+	const { state } = storeToRefs(useDocumentsStore());
 
 	const form = ref({
 		Avans: null,
@@ -200,11 +208,31 @@ import {useDocumentsStore} from '../stores/document';
 		Mesto: null,
 		IKZ: null,
 		Istochnik: null,
+		Status: null
 	})
 
 	const changeData = () => {
 		setNewFormData(form.value);
 	};
+	const findEndDate = computed(() => {
+		let dataStart = form.value.Period?.split('.')
+
+		if (dataStart)
+			dataStart = new Date(`20${dataStart[2]}.${dataStart[1]}.${dataStart[0]}`)
+
+		let dataEnd = new Date().setDate(new Date(dataStart).getDate() + 10)
+
+		let dateObj = new Date(dataEnd);
+
+		let month = dateObj.getUTCMonth() + 1;
+		month = String(month).length == 1 ? `0${month}` : month;
+
+		let day = dateObj.getUTCDate();
+		day = String(day).length == 1 ? `0${day}` : day;
+		
+		let year = dateObj.getUTCFullYear();
+		return day + "." + month + "." + year;
+	});
 	onMounted(
 		() => {
 			getLastVersion();
@@ -219,8 +247,11 @@ import {useDocumentsStore} from '../stores/document';
 					Predmet: data?.Predmet,
 					Mesto: data?.Mesto,
 					IKZ: data?.IKZ,
-					Istochnik: data?.Istochnik
+					Istochnik: data?.Istochnik,
+					Status: data?.Status
 				};
+
+
 			}, 1500);
 			
 		}

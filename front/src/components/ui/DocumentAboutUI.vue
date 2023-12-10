@@ -1,8 +1,8 @@
 <template>
 	<div class="about-ui">
 		<div class="about-ui__title">
-			<p>О заказчике</p>
-			<span>ГБУЗ «КМСЧ № 1»</span>
+			<p>{{ dataUser.role == 'customer' ? 'О заказчике' : 'О поставщике' }}</p>
+			<span>{{ dataUser.companyName }}</span>
 		</div>
 		<div class="about-ui__podpis" v-if="customer">
 			<button class="document-main__item-change">
@@ -13,7 +13,7 @@
 				type="text" 
 				id="podpis" 
 				name="podpis" 
-				placeholder="Лукьянов Михаил Владимирович (Генеральный директор)"
+				:placeholder="dataUser.fullname"
 				class="input" 
 			>
 		</div>
@@ -44,25 +44,25 @@
 			<div class="about-ui__tabs-tab about-ui__tabs-tab--requisites" v-if="getActiveTab === 'requisites'">
 				<div class="about-ui__tabs-item">
 					<p>Наименование банка</p>
-					<span>ПАО «СберБанк»</span>
+					<span>{{ dataUser.paymentAccount }}</span>
 				</div>
 				<div class="about-ui__tabs-item">
 					<p>Рассчетный счет</p>
-					<span>03224643570000005600</span>
+					<span>{{ dataUser.requisites }}</span>
 				</div>
 				<div class="about-ui__tabs-item">
 					<p>БИК</p>
-					<span>015773997</span>
+					<span>{{ dataUser.bik }}</span>
 				</div>
 			</div>
 			<div class="about-ui__tabs-tab about-ui__tabs-tab--contacts" v-if="getActiveTab === 'contacts'">
 				<div class="about-ui__tabs-item">
 					<p>Номер телефона</p>
-					<span>(342) 205-58-68</span>
+					<span>{{ dataUser.phone }}</span>
 				</div>
 				<div class="about-ui__tabs-item">
 					<p>Email</p>
-					<span>Kmsch1zakup@mail.ru</span>
+					<span>{{ dataUser.email }}</span>
 				</div>
 			</div>
 		</div>
@@ -78,6 +78,10 @@ export default {
 		customer: {
 			type: Boolean,
 			default: false
+		},
+		dataUser: {
+			type: Object,
+			required: true
 		}
 	},
 	components: {
